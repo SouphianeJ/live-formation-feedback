@@ -1,0 +1,166 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "mongodb"
+}
+
+model Questionnaire {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  title       String
+  description String?
+  slug        String   @unique
+  status      String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  domains  Domain[]
+  attempts Attempt[]
+}
+
+model Domain {
+  id              String           @id @default(auto()) @map("_id") @db.ObjectId
+  questionnaireId String           @db.ObjectId
+  name            String
+  description     String?
+  order           Int
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+
+  questionnaire   Questionnaire    @relation(fields: [questionnaireId], references: [id])
+  questions       Question[]
+  resources       Resource[]
+  domainTrainings DomainTraining[]
+}
+
+model Question {
+  id         String        @id @default(auto()) @map("_id") @db.ObjectId
+  domainId   String        @db.ObjectId
+  type       String
+  prompt     String
+  helpText   String?
+  order      Int
+  isRequired Boolean
+  createdAt  DateTime      @default(now())
+  updatedAt  DateTime      @updatedAt
+
+  domain   Domain        @relation(fields: [domainId], references: [id])
+  answers  AnswerOption[]
+}
+
+model AnswerOption {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  questionId String   @db.ObjectId
+  value      String
+  label      String
+  score      Int
+  order      Int
+
+  question Question @relation(fields: [questionId], references: [id])
+}
+
+model Resource {
+  id       String   @id @default(auto()) @map("_id") @db.ObjectId
+  domainId String   @db.ObjectId
+  title    String
+  type     String
+  url      String
+  order    Int
+
+  domain Domain @relation(fields: [domainId], references: [id])
+}
+
+model Training {
+  id          String           @id @default(auto()) @map("_id") @db.ObjectId
+  title       String
+  description String?
+  duration    String?
+  format      String?
+  url         String?
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+
+  domainTrainings DomainTraining[]
+}
+
+model DomainTraining {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  domainId   String   @db.ObjectId
+  trainingId String   @db.ObjectId
+
+  domain   Domain   @relation(fields: [domainId], references: [id])
+  training Training @relation(fields: [trainingId], references: [id])
+
+  @@unique([domainId, trainingId])
+}
+
+model Attempt {
+  id              String           @id @default(auto()) @map("_id") @db.ObjectId
+  questionnaireId String           @db.ObjectId
+  email           String
+  status          String
+  createdAt       DateTime         @default(now())
+  submittedAt     DateTime?
+  lockedAt        DateTime?
+  responses       UserResponse[]
+  scoreSnapshot   ScoreSnapshot?
+
+  questionnaire   Questionnaire    @relation(fields: [questionnaireId], references: [id])
+}
+
+model AdminLoginCode {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  email     String
+  codeHash  String
+  expiresAt DateTime
+  usedAt    DateTime?
+  createdAt DateTime @default(now())
+}
+
+type UserResponse {
+  questionId    String
+  answerId      String
+  scoreSnapshot Int
+}
+
+type ScoreSnapshot {
+  domainScores         DomainScore[]
+  lowestDomains        LowestDomain[]
+  recommendedTrainings RecommendedTraining[]
+  recommendedResources RecommendedResource[]
+}
+
+type DomainScore {
+  domainId   String
+  domainName String
+  score      Int
+  maxScore   Int
+  percent    Float
+}
+
+type LowestDomain {
+  domainId   String
+  domainName String
+  percent    Float
+}
+
+type RecommendedTraining {
+  trainingId String
+  title      String
+  url        String?
+}
+
+type RecommendedResource {
+  resourceId String
+  title      String
+  type       String
+  url        String
+}

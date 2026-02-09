@@ -1,0 +1,67 @@
+import type { ScoreSnapshot } from "@/generated/prisma";
+
+export function adminCodeEmail(code: string) {
+  const text = `Votre code de connexion admin est: ${code}. Il expire dans 10 minutes.`;
+  return {
+    subject: "Code de connexion admin",
+    html: `<p>Votre code de connexion admin est :</p><h2>${code}</h2><p>Il expire dans 10 minutes.</p>`,
+    text,
+  };
+}
+
+export function participantResultEmail(params: {
+  title: string;
+  snapshot: ScoreSnapshot;
+  resultUrl?: string;
+}) {
+  const { snapshot } = params;
+  const scoresHtml = snapshot.domainScores
+    .map(
+      (score) =>
+        `<li><strong>${score.domainName}</strong> : ${score.score}/${score.maxScore} (${score.percent.toFixed(
+          0
+        )}%)</li>`
+    )
+    .join("");
+
+  const lowestHtml = snapshot.lowestDomains
+    .map((domain) => `<li>${domain.domainName} (${domain.percent.toFixed(0)}%)</li>`)
+    .join("");
+
+  const trainingsHtml = snapshot.recommendedTrainings
+    .map(
+      (training) =>
+        `<li><a href="${training.url || "#"}">${training.title}</a></li>`
+    )
+    .join("");
+
+  const resourcesHtml = snapshot.recommendedResources
+    .map(
+      (resource) =>
+        `<li><a href="${resource.url}">${resource.title}</a> (${resource.type})</li>`
+    )
+    .join("");
+
+  const resultLink = params.resultUrl
+    ? `<p>Voir vos résultats: <a href="${params.resultUrl}">${params.resultUrl}</a></p>`
+    : "";
+
+  return {
+    subject: `Vos recommandations - ${params.title}`,
+    html: `
+      <h2>Résultats du diagnostic</h2>
+      <p>Voici votre score par domaine :</p>
+      <ul>${scoresHtml}</ul>
+      <p>Vos 2 domaines les plus faibles :</p>
+      <ul>${lowestHtml}</ul>
+      <p>Formations recommandées :</p>
+      <ul>${trainingsHtml || "<li>Aucune recommandation</li>"}</ul>
+      <p>Ressources :</p>
+      <ul>${resourcesHtml || "<li>Aucune ressource</li>"}</ul>
+      ${resultLink}
+    `,
+    text: `Résultats du diagnostic\nScores: ${snapshot.domainScores
+      .map((score) => `${score.domainName}: ${score.percent.toFixed(0)}%`)
+      .join(", ")}`,
+  };
+}
