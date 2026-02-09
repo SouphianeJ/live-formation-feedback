@@ -25,6 +25,10 @@ export function getFromAddress() {
   return process.env.SMTP_FROM || process.env.SMTP_USER || "no-reply@example.com";
 }
 
+export function hasMailConfig() {
+  return Boolean(process.env.SMTP_HOST && process.env.SMTP_USER && process.env.SMTP_PASS);
+}
+
 export async function sendMail(options: {
   to: string;
   subject: string;
