@@ -5,7 +5,7 @@ import { requireNumber, requireString } from "@/lib/validation";
 
 export async function GET(request: Request) {
   try {
-    requireAdmin();
+    await requireAdmin();
     const { searchParams } = new URL(request.url);
     const questionId = searchParams.get("questionId");
 
@@ -23,7 +23,7 @@ export async function GET(request: Request) {
 
 export async function POST(request: Request) {
   try {
-    requireAdmin();
+    await requireAdmin();
     const body = (await request.json()) as {
       questionId?: string;
       value?: string;

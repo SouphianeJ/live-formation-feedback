@@ -43,7 +43,7 @@ export async function POST(request: Request) {
     });
 
     const token = createAdminJwt(email);
-    const cookieStore = cookies();
+    const cookieStore = await cookies();
     cookieStore.set("admin_token", token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",

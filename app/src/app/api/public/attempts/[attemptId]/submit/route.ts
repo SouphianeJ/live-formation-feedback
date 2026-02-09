@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { NextResponse, type NextRequest } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { requireArray, requireString } from "@/lib/validation";
 import { computeScoreSnapshot } from "@/lib/scoring";
@@ -6,12 +6,13 @@ import { sendMail } from "@/lib/email";
 import { participantResultEmail } from "@/lib/templates";
 
 export async function POST(
-  request: Request,
-  { params }: { params: { attemptId: string } }
+  request: NextRequest,
+  { params }: { params: Promise<{ attemptId: string }> }
 ) {
   try {
+    const { attemptId } = await params;
     const attempt = await prisma.attempt.findUnique({
-      where: { id: params.attemptId },
+      where: { id: attemptId },
     });
 
     if (!attempt) {

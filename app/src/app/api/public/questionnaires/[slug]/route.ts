@@ -1,13 +1,14 @@
-import { NextResponse } from "next/server";
+import { NextResponse, type NextRequest } from "next/server";
 import { prisma } from "@/lib/prisma";
 
 export async function GET(
-  _request: Request,
-  { params }: { params: { slug: string } }
+  _request: NextRequest,
+  { params }: { params: Promise<{ slug: string }> }
 ) {
   try {
+    const { slug } = await params;
     const questionnaire = await prisma.questionnaire.findUnique({
-      where: { slug: params.slug },
+      where: { slug },
       include: {
         domains: {
           orderBy: { order: "asc" },

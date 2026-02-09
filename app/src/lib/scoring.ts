@@ -1,4 +1,4 @@
-import type { AnswerOption, Domain, Question, Resource, Training } from "@prisma/client";
+import type { AnswerOption, Domain, Question, Resource, Training } from "@/lib/types";
 
 export type ResponseInput = {
   questionId: string;

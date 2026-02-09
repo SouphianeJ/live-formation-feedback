@@ -9,6 +9,9 @@
   --accent: #2155a4;
   --accent-strong: #193f7b;
   --danger: #b8383b;
+  --font-geist-sans: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --font-geist-mono: "SFMono-Regular", "Menlo", "Monaco", "Consolas",
+    "Liberation Mono", "Courier New", monospace;
 }
 
 @theme inline {
