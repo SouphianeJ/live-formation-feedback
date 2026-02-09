@@ -67,9 +67,9 @@ export default function AdminQuestionnaireDetailPage() {
   return (
     <div className="stack" style={{ gap: 24 }}>
       <AdminNav />
-      <AdminPageHeader title={questionnaire.title} subtitle="Configuration avancée" />
+      <AdminPageHeader title={questionnaire.title} subtitle="Configuration avancÃ©e" />
       {error ? <div className="alert">{error}</div> : null}
-      <Card title="Paramètres">
+      <Card title="ParamÃ¨tres">
         <QuestionnaireSettings
           questionnaire={questionnaire}
           onUpdated={(item) => setQuestionnaire(item)}

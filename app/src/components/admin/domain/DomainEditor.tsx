@@ -148,7 +148,7 @@ export function DomainEditor({
         </Button>
       </div>
       <div className="stack">
-        <h4 style={{ marginBottom: 0 }}>Formations associées</h4>
+        <h4 style={{ marginBottom: 0 }}>Formations associÃ©es</h4>
         <DomainTrainingEditor
           domainId={domain.id}
           trainings={trainings}

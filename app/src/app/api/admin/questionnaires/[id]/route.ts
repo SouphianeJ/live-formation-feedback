@@ -1,16 +1,17 @@
-import { NextResponse } from "next/server";
+import { NextResponse, type NextRequest } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { requireAdmin } from "@/lib/admin";
 import { slugify } from "@/lib/slug";
 
 export async function GET(
-  _request: Request,
-  { params }: { params: { id: string } }
+  _request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    requireAdmin();
+    const { id } = await params;
+    await requireAdmin();
     const item = await prisma.questionnaire.findUnique({
-      where: { id: params.id },
+      where: { id },
     });
     if (!item) {
       return NextResponse.json({ error: "Not found" }, { status: 404 });
@@ -23,11 +24,12 @@ export async function GET(
 }
 
 export async function PATCH(
-  request: Request,
-  { params }: { params: { id: string } }
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    requireAdmin();
+    const { id } = await params;
+    await requireAdmin();
     const body = (await request.json()) as {
       title?: string;
       description?: string;
@@ -51,7 +53,7 @@ export async function PATCH(
     }
 
     const item = await prisma.questionnaire.update({
-      where: { id: params.id },
+      where: { id },
       data,
     });
 
@@ -63,12 +65,13 @@ export async function PATCH(
 }
 
 export async function DELETE(
-  _request: Request,
-  { params }: { params: { id: string } }
+  _request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    requireAdmin();
-    await prisma.questionnaire.delete({ where: { id: params.id } });
+    const { id } = await params;
+    await requireAdmin();
+    await prisma.questionnaire.delete({ where: { id } });
     return NextResponse.json({ ok: true });
   } catch (error) {
     console.error(error);

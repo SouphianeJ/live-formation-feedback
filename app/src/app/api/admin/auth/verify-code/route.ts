@@ -16,7 +16,7 @@ export async function POST(request: Request) {
     }
 
     if (!isAdminEmail(email)) {
-      return NextResponse.json({ error: "Email non autorisé" }, { status: 403 });
+      return NextResponse.json({ error: "Email non autorisÃ©" }, { status: 403 });
     }
 
     const loginCode = await prisma.adminLoginCode.findFirst({
@@ -29,7 +29,7 @@ export async function POST(request: Request) {
     });
 
     if (!loginCode) {
-      return NextResponse.json({ error: "Code expiré" }, { status: 400 });
+      return NextResponse.json({ error: "Code expirÃ©" }, { status: 400 });
     }
 
     const match = await bcrypt.compare(code, loginCode.codeHash);
@@ -43,7 +43,7 @@ export async function POST(request: Request) {
     });
 
     const token = createAdminJwt(email);
-    const cookieStore = cookies();
+    const cookieStore = await cookies();
     cookieStore.set("admin_token", token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",

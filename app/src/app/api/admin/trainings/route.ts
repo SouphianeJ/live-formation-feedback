@@ -5,7 +5,7 @@ import { requireString } from "@/lib/validation";
 
 export async function GET() {
   try {
-    requireAdmin();
+    await requireAdmin();
     const items = await prisma.training.findMany({
       orderBy: { createdAt: "desc" },
     });
@@ -18,7 +18,7 @@ export async function GET() {
 
 export async function POST(request: Request) {
   try {
-    requireAdmin();
+    await requireAdmin();
     const body = (await request.json()) as {
       title?: string;
       description?: string;

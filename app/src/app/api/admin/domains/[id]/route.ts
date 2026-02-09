@@ -1,13 +1,14 @@
-import { NextResponse } from "next/server";
+import { NextResponse, type NextRequest } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { requireAdmin } from "@/lib/admin";
 
 export async function PATCH(
-  request: Request,
-  { params }: { params: { id: string } }
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    requireAdmin();
+    const { id } = await params;
+    await requireAdmin();
     const body = (await request.json()) as {
       name?: string;
       description?: string;
@@ -20,7 +21,7 @@ export async function PATCH(
     if (typeof body.order === "number") data.order = body.order;
 
     const item = await prisma.domain.update({
-      where: { id: params.id },
+      where: { id },
       data,
     });
     return NextResponse.json({ item });
@@ -31,12 +32,13 @@ export async function PATCH(
 }
 
 export async function DELETE(
-  _request: Request,
-  { params }: { params: { id: string } }
+  _request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    requireAdmin();
-    await prisma.domain.delete({ where: { id: params.id } });
+    const { id } = await params;
+    await requireAdmin();
+    await prisma.domain.delete({ where: { id } });
     return NextResponse.json({ ok: true });
   } catch (error) {
     console.error(error);

@@ -57,7 +57,7 @@ export function QuestionnaireForm({ onCreated }: { onCreated: (item: Questionnai
         </Select>
       </AdminField>
       <Button onClick={handleSubmit} disabled={loading}>
-        {loading ? "Création..." : "Créer"}
+        {loading ? "CrÃ©ation..." : "CrÃ©er"}
       </Button>
       {error ? <div className="alert">{error}</div> : null}
     </div>

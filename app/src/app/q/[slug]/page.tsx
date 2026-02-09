@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useEffect, useMemo, useState } from "react";
 import { useParams } from "next/navigation";
@@ -6,8 +6,9 @@ import type { Questionnaire } from "@/lib/types";
 import { fetchJson } from "@/lib/client";
 import { QuestionnaireHeader } from "@/components/public/QuestionnaireHeader";
 import { EmailStep } from "@/components/public/EmailStep";
-import { QuestionCard } from "@/components/public/QuestionCard";
 import { SubmitStep } from "@/components/public/SubmitStep";
+import { QuestionnaireDomainSection } from "@/components/public/QuestionnaireDomainSection";
+import { QuestionnaireProgress } from "@/components/public/QuestionnaireProgress";
 
 export default function QuestionnairePage() {
   const params = useParams<{ slug: string }>();
@@ -88,6 +89,15 @@ export default function QuestionnairePage() {
     return <div className="alert">{error}</div>;
   }
 
+  const handleAnswerChange = (questionId: string, answerId: string) => {
+    setResponses((prev) => ({
+      ...prev,
+      [questionId]: answerId,
+    }));
+  };
+
+  const answeredCount = Object.keys(responses).length;
+
   return (
     <div className="stack" style={{ gap: 24 }}>
       <QuestionnaireHeader title={questionnaire.title} description={questionnaire.description} />
@@ -99,27 +109,12 @@ export default function QuestionnairePage() {
       {attemptId && !submitted ? (
         <div className="stack" style={{ gap: 20 }}>
           {domains.map((domain) => (
-            <div key={domain.id} className="stack" style={{ gap: 12 }}>
-              <div className="card">
-                <h2 className="title">{domain.name}</h2>
-                {domain.description ? (
-                  <p className="subtitle">{domain.description}</p>
-                ) : null}
-              </div>
-              {domain.questions.map((question) => (
-                <QuestionCard
-                  key={question.id}
-                  question={question}
-                  value={responses[question.id]}
-                  onChange={(answerId) =>
-                    setResponses({
-                      ...responses,
-                      [question.id]: answerId,
-                    })
-                  }
-                />
-              ))}
-            </div>
+            <QuestionnaireDomainSection
+              key={domain.id}
+              domain={domain}
+              responses={responses}
+              onAnswerChange={handleAnswerChange}
+            />
           ))}
           <SubmitStep onSubmit={handleSubmit} />
         </div>
@@ -132,9 +127,7 @@ export default function QuestionnairePage() {
       ) : null}
 
       {attemptId && !submitted ? (
-        <div className="label">
-          Questions répondues: {Object.keys(responses).length}/{allQuestions.length}
-        </div>
+        <QuestionnaireProgress answeredCount={answeredCount} totalCount={allQuestions.length} />
       ) : null}
     </div>
   );

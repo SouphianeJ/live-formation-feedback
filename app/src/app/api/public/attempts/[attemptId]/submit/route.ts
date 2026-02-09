@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { NextResponse, type NextRequest } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { requireArray, requireString } from "@/lib/validation";
 import { computeScoreSnapshot } from "@/lib/scoring";
@@ -6,12 +6,13 @@ import { sendMail } from "@/lib/email";
 import { participantResultEmail } from "@/lib/templates";
 
 export async function POST(
-  request: Request,
-  { params }: { params: { attemptId: string } }
+  request: NextRequest,
+  { params }: { params: Promise<{ attemptId: string }> }
 ) {
   try {
+    const { attemptId } = await params;
     const attempt = await prisma.attempt.findUnique({
-      where: { id: params.attemptId },
+      where: { id: attemptId },
     });
 
     if (!attempt) {
@@ -19,7 +20,7 @@ export async function POST(
     }
 
     if (attempt.lockedAt) {
-      return NextResponse.json({ error: "Tentative verrouillée" }, { status: 409 });
+      return NextResponse.json({ error: "Tentative verrouillÃ©e" }, { status: 409 });
     }
 
     const body = (await request.json()) as {

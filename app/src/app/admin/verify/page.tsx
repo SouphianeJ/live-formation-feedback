@@ -33,7 +33,7 @@ export default function AdminVerifyPage() {
 
   return (
     <div className="stack" style={{ gap: 24 }}>
-      <Card title="Vérification">
+      <Card title="VÃ©rification">
         <div className="stack">
           <label className="stack" style={{ gap: 6 }}>
             <span className="label">Email</span>
@@ -52,7 +52,7 @@ export default function AdminVerifyPage() {
             />
           </label>
           <Button onClick={handleSubmit} disabled={loading}>
-            {loading ? "Vérification..." : "Valider"}
+            {loading ? "VÃ©rification..." : "Valider"}
           </Button>
           {status ? <div className="alert">{status}</div> : null}
         </div>

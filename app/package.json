@@ -6,6 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "postinstall": "prisma generate",
     "lint": "eslint"
   },
   "dependencies": {
@@ -19,11 +20,17 @@
     "react": "19.2.3",
     "react-dom": "19.2.3"
   },
+  "optionalDependencies": {
+    "@next/swc-linux-x64-gnu": "16.1.6",
+    "@next/swc-linux-x64-musl": "16.1.6"
+  },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@types/jsonwebtoken": "^9.0.10",
+    "@types/nodemailer": "^6.4.17",
     "eslint": "^9",
     "eslint-config-next": "16.1.6",
     "tailwindcss": "^4",

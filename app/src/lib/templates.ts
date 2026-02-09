@@ -1,4 +1,4 @@
-import type { ScoreSnapshot } from "@/generated/prisma";
+import type { ScoreSnapshot } from "@/lib/types";
 
 export function adminCodeEmail(code: string) {
   const text = `Votre code de connexion admin est: ${code}. Il expire dans 10 minutes.`;

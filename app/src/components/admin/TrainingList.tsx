@@ -16,7 +16,7 @@ export function TrainingList({
       <thead>
         <tr>
           <th>Titre</th>
-          <th>Durée</th>
+          <th>DurÃ©e</th>
           <th>Format</th>
           <th>URL</th>
           <th></th>

@@ -56,7 +56,7 @@ export function QuestionEditor({
       body: JSON.stringify({
         questionId: question.id,
         value: "A",
-        label: "Nouvelle réponse",
+        label: "Nouvelle rÃ©ponse",
         score: 0,
         order: answers.length + 1,
       }),
@@ -106,7 +106,7 @@ export function QuestionEditor({
             />
           ))}
           <Button variant="secondary" onClick={handleAddAnswer}>
-            Ajouter une réponse
+            Ajouter une rÃ©ponse
           </Button>
         </div>
       </div>

@@ -20,7 +20,7 @@ export async function POST(request: Request) {
     }
 
     if (!isAdminEmail(email)) {
-      return NextResponse.json({ error: "Email non autorisé" }, { status: 403 });
+      return NextResponse.json({ error: "Email non autorisÃ©" }, { status: 403 });
     }
 
     const code = generateCode();
