@@ -13,12 +13,12 @@ export function SubmitStep({
   return (
     <Card>
       <div className="stack" style={{ gap: 12 }}>
-        <h2 className="title">Envoyer mes réponses</h2>
+        <h2 className="title">Envoyer mes rÃ©ponses</h2>
         <p className="subtitle">
           {message ||
             "Vous recevrez un email avec vos recommandations et vos scores."}
         </p>
-        <Button onClick={onSubmit} disabled={loading}>
+        <Button onClick={onSubmit} disabled={loading} className="btn-block">
           {loading ? "Envoi..." : "Soumettre"}
         </Button>
       </div>

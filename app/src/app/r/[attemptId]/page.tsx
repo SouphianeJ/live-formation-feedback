@@ -39,7 +39,7 @@ export default function ResultPage() {
 
   return (
     <div className="stack" style={{ gap: 24 }}>
-      <Card title={data.item.questionnaireTitle} subtitle="Vos résultats">
+      <Card title={data.item.questionnaireTitle} subtitle="Vos rÃ©sultats">
         <div className="stack">
           <h3>Scores par domaine</h3>
           <ul>
@@ -51,7 +51,7 @@ export default function ResultPage() {
           </ul>
         </div>
       </Card>
-      <Card title="Domaines à renforcer">
+      <Card title="Domaines Ã  renforcer">
         <ul>
           {snapshot.lowestDomains.map((domain) => (
             <li key={domain.domainId}>
@@ -60,7 +60,7 @@ export default function ResultPage() {
           ))}
         </ul>
       </Card>
-      <Card title="Formations recommandées">
+      <Card title="Formations recommandÃ©es">
         <ul>
           {snapshot.recommendedTrainings.length ? (
             snapshot.recommendedTrainings.map((training) => (

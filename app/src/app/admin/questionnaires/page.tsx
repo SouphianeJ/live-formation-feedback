@@ -24,7 +24,7 @@ export default function AdminQuestionnairesPage() {
       <AdminNav />
       <AdminPageHeader
         title="Questionnaires"
-        subtitle="Créez et gérez vos questionnaires diagnostiques."
+        subtitle="CrÃ©ez et gÃ©rez vos questionnaires diagnostiques."
       />
       {error ? <div className="alert">{error}</div> : null}
       <Card title="Nouveau questionnaire">

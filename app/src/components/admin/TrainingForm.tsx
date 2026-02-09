@@ -54,7 +54,7 @@ export function TrainingForm({ onCreated }: { onCreated: (item: TrainingItem) =>
       <AdminField label="Description">
         <Input value={description} onChange={(event) => setDescription(event.target.value)} />
       </AdminField>
-      <AdminField label="Durée">
+      <AdminField label="DurÃ©e">
         <Input value={duration} onChange={(event) => setDuration(event.target.value)} />
       </AdminField>
       <AdminField label="Format">
@@ -64,7 +64,7 @@ export function TrainingForm({ onCreated }: { onCreated: (item: TrainingItem) =>
         <Input value={url} onChange={(event) => setUrl(event.target.value)} />
       </AdminField>
       <Button onClick={handleSubmit} disabled={loading}>
-        {loading ? "Création..." : "Créer"}
+        {loading ? "CrÃ©ation..." : "CrÃ©er"}
       </Button>
       {error ? <div className="alert">{error}</div> : null}
     </div>

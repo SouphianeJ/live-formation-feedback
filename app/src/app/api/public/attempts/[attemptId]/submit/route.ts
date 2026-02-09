@@ -19,7 +19,7 @@ export async function POST(
     }
 
     if (attempt.lockedAt) {
-      return NextResponse.json({ error: "Tentative verrouillée" }, { status: 409 });
+      return NextResponse.json({ error: "Tentative verrouillÃ©e" }, { status: 409 });
     }
 
     const body = (await request.json()) as {

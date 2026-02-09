@@ -13,7 +13,7 @@ export function AdminNav() {
         </a>
       </div>
       <a href="/admin/login" className="badge">
-        Déconnexion
+        DÃ©connexion
       </a>
     </nav>
   );

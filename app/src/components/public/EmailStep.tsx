@@ -14,7 +14,7 @@ export function EmailStep({
   loading?: boolean;
 }) {
   return (
-    <Card title="Commencer le diagnostic" subtitle="Saisissez votre email pour d�buter.">
+    <Card title="Commencer le diagnostic" subtitle="Saisissez votre email pour débuter.">
       <div className="stack">
         <label className="stack" style={{ gap: 6 }}>
           <span className="label">Email</span>
@@ -25,7 +25,7 @@ export function EmailStep({
             placeholder="votre.email@exemple.com"
           />
         </label>
-        <Button onClick={onSubmit} disabled={loading}>
+        <Button onClick={onSubmit} disabled={loading} className="btn-block">
           {loading ? "Chargement..." : "Démarrer"}
         </Button>
       </div>

@@ -20,7 +20,7 @@ export default function AdminLoginPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email }),
       });
-      setStatus("Code envoyé. Vérifiez votre email.");
+      setStatus("Code envoyÃ©. VÃ©rifiez votre email.");
     } catch (error) {
       setStatus((error as Error).message);
     } finally {

@@ -16,7 +16,7 @@ export default function HomePage() {
           recommandations.
         </p>
       </Card>
-      <Card title="Accéder à un questionnaire">
+      <Card title="AccÃ©der Ã  un questionnaire">
         <div className="stack">
           <Input
             value={slug}

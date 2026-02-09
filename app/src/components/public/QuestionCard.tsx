@@ -25,27 +25,19 @@ export function QuestionCard({
           {question.answers.map((answer) => (
             <label
               key={answer.id}
-              className="card"
-              style={{
-                padding: "12px 14px",
-                border:
-                  value === answer.id
-                    ? "2px solid var(--accent)"
-                    : "1px solid var(--border)",
-              }}
+              className={`question-option ${value === answer.id ? "is-selected" : ""}`}
             >
-              <div className="row" style={{ alignItems: "flex-start" }}>
-                <input
-                  type="radio"
-                  name={question.id}
-                  value={answer.id}
-                  checked={value === answer.id}
-                  onChange={() => onChange(answer.id)}
-                />
-                <div>
-                  <div style={{ fontWeight: 600 }}>{answer.label}</div>
-                  <div className="label">Choix {answer.value}</div>
-                </div>
+              <input
+                type="radio"
+                name={question.id}
+                value={answer.id}
+                checked={value === answer.id}
+                onChange={() => onChange(answer.id)}
+                className="question-option__input"
+              />
+              <div className="question-option__content">
+                <div className="question-option__label">{answer.label}</div>
+                <div className="label">Choix {answer.value}</div>
               </div>
             </label>
           ))}
