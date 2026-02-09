@@ -1,59 +1,36 @@
-# Live Formation Feedback
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-Plateforme de questionnaires diagnostiques avec scoring par domaines et recommandations envoyées par email.
+## Getting Started
 
-## Stack
-- Next.js (App Router) + TypeScript
-- MongoDB Atlas via Prisma (MongoDB)
-- Auth admin par code magique + JWT httpOnly
-- Emails via Nodemailer (SMTP Google)
+First, run the development server:
 
-## Setup local
-1. Installer les dépendances
-```bash
-cd app
-npm install
-```
-
-2. Configurer `.env`
-```ini
-DATABASE_URL="mongodb+srv://USER:PASS@cluster.mongodb.net/db"
-JWT_SECRET="super-secret"
-ADMIN_ALLOWED_EMAILS="admin@domaine.com,admin2@domaine.com"
-SMTP_HOST="smtp.gmail.com"
-SMTP_PORT="587"
-SMTP_USER="email@gmail.com"
-SMTP_PASS="app-password"
-SMTP_FROM="Live Formation <email@gmail.com>"
-APP_BASE_URL="http://localhost:3000"
-```
-
-3. Générer Prisma
-```bash
-npx prisma generate
-```
-
-4. Lancer le serveur
 ```bash
 npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
 ```
 
-## MongoDB Atlas
-- Créez un cluster MongoDB Atlas
-- Ajoutez un utilisateur avec accès lecture/écriture
-- Renseignez la chaîne de connexion dans `DATABASE_URL`
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-## SMTP Google
-- Activez les mots de passe d'application Google (compte Gmail)
-- Utilisez le mot de passe d'application dans `SMTP_PASS`
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-## Déploiement Vercel
-1. Pousser le repo vers GitHub
-2. Connecter le repo à Vercel
-3. Ajouter les variables d'environnement dans Vercel
-4. Déployer
+This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-## Notes
-- Les tentatives sont verrouillées après soumission (`lockedAt`)
-- Les recommandations sont basées sur les 2 domaines au score le plus faible
-- Les snapshots sont stockés pour éviter tout recalcul
+## Learn More
+
+To learn more about Next.js, take a look at the following resources:
+
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+
+## Deploy on Vercel
+
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
