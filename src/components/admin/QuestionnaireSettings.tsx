@@ -8,6 +8,13 @@ import { AdminField } from "@/components/admin/AdminField";
 import { fetchJson } from "@/lib/client";
 import type { Questionnaire } from "@/lib/types";
 
+function buildQuestionnaireUrl(slug: string) {
+  const base =
+    (typeof window !== "undefined" && window.location?.origin) || "";
+  if (!base) return `/q/${slug}`;
+  return `${base}/q/${slug}`;
+}
+
 export function QuestionnaireSettings({
   questionnaire,
   onUpdated,
@@ -21,6 +28,7 @@ export function QuestionnaireSettings({
   const [slug, setSlug] = useState(questionnaire.slug);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [copied, setCopied] = useState(false);
 
   const handleSave = async () => {
     setLoading(true);
@@ -40,6 +48,25 @@ export function QuestionnaireSettings({
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleCopy = async () => {
+    const url = buildQuestionnaireUrl(slug);
+    try {
+      await navigator.clipboard.writeText(url);
+    } catch {
+      const textarea = document.createElement("textarea");
+      textarea.value = url;
+      textarea.style.position = "fixed";
+      textarea.style.left = "-9999px";
+      document.body.appendChild(textarea);
+      textarea.focus();
+      textarea.select();
+      document.execCommand("copy");
+      document.body.removeChild(textarea);
+    }
+    setCopied(true);
+    setTimeout(() => setCopied(false), 1200);
   };
 
   return (
@@ -63,9 +90,17 @@ export function QuestionnaireSettings({
           <option value="archived">archived</option>
         </Select>
       </AdminField>
-      <Button onClick={handleSave} disabled={loading}>
-        {loading ? "Sauvegarde..." : "Sauvegarder"}
-      </Button>
+      <div className="row" style={{ gap: 8 }}>
+        <Button onClick={handleSave} disabled={loading}>
+          {loading ? "Sauvegarde..." : "Sauvegarder"}
+        </Button>
+        <a href={`/q/${slug}`} className="badge" target="_blank" rel="noreferrer">
+          Voir le questionnaire
+        </a>
+        <Button variant="secondary" onClick={handleCopy}>
+          {copied ? "Copié" : "Copier l'URL"}
+        </Button>
+      </div>
       {error ? <div className="alert">{error}</div> : null}
     </div>
   );

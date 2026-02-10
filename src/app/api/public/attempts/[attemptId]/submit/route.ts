@@ -4,6 +4,7 @@ import { requireArray, requireString } from "@/lib/validation";
 import { computeScoreSnapshot } from "@/lib/scoring";
 import { sendMail } from "@/lib/email";
 import { participantResultEmail } from "@/lib/templates";
+import { makeEmailSnapshot, makePersistedSnapshot } from "@/lib/snapshots";
 
 export async function POST(
   request: NextRequest,
@@ -62,31 +63,8 @@ export async function POST(
     });
 
     const baseUrl = process.env.APP_BASE_URL || "";
-    const trackedSnapshot = {
-      domainScores: snapshot.domainScores,
-      lowestDomains: snapshot.lowestDomains,
-      recommendedTrainings: snapshot.recommendedTrainings,
-      recommendedResources: snapshot.recommendedResources.map((resource) => ({
-        resourceId: resource.resourceId,
-        title: resource.title,
-        type: resource.type,
-        url: baseUrl
-          ? `${baseUrl}/r/${attemptId}/resource/${resource.resourceId}`
-          : `/r/${attemptId}/resource/${resource.resourceId}`,
-      })),
-    };
-
-    const persistedSnapshot = {
-      domainScores: snapshot.domainScores,
-      lowestDomains: snapshot.lowestDomains,
-      recommendedTrainings: snapshot.recommendedTrainings,
-      recommendedResources: snapshot.recommendedResources.map((resource) => ({
-        resourceId: resource.resourceId,
-        title: resource.title,
-        type: resource.type,
-        url: resource.url,
-      })),
-    };
+    const persistedSnapshot = makePersistedSnapshot(snapshot);
+    const trackedSnapshot = makeEmailSnapshot(snapshot, attemptId, baseUrl);
 
     const updated = await prisma.attempt.update({
       where: { id: attempt.id },

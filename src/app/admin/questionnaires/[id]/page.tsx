@@ -20,6 +20,11 @@ export default function AdminQuestionnaireDetailPage() {
   const [trainings, setTrainings] = useState<TrainingItem[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
+  const [stats, setStats] = useState<{
+    total: number;
+    submitted: number;
+    completionRate: number;
+  } | null>(null);
 
   useEffect(() => {
     const load = async () => {
@@ -33,6 +38,12 @@ export default function AdminQuestionnaireDetailPage() {
         setQuestionnaire(questionnaireData);
         setDomains(domainData);
         setTrainings(trainingData);
+        const statsData = await fetchJson<{
+          total: number;
+          submitted: number;
+          completionRate: number;
+        }>(`/api/admin/attempts/stats?questionnaireId=${params.id}`);
+        setStats(statsData);
       } catch (err) {
         setError((err as Error).message);
       } finally {
@@ -74,6 +85,26 @@ export default function AdminQuestionnaireDetailPage() {
           questionnaire={questionnaire}
           onUpdated={(item) => setQuestionnaire(item)}
         />
+      </Card>
+      <Card title="Stats questionnaire" subtitle="Suivi des tentatives et complétion.">
+        {stats ? (
+          <div className="row" style={{ gap: 12 }}>
+            <div className="card" style={{ padding: "12px" }}>
+              <div className="label">Tentatives</div>
+              <strong>{stats.total}</strong>
+            </div>
+            <div className="card" style={{ padding: "12px" }}>
+              <div className="label">Soumises</div>
+              <strong>{stats.submitted}</strong>
+            </div>
+            <div className="card" style={{ padding: "12px" }}>
+              <div className="label">Taux de complétion</div>
+              <strong>{stats.completionRate.toFixed(0)}%</strong>
+            </div>
+          </div>
+        ) : (
+          <div className="label">Aucune donnée</div>
+        )}
       </Card>
       <Card title="Domaines" subtitle="Structurez vos axes de diagnostic.">
         <div className="stack">
