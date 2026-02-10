@@ -44,8 +44,8 @@ export default async function ResourcePage({
   });
 
   const resourceUrl = buildResourceUrl(resource.url);
-  const googleEmbedUrl = resourceUrl.startsWith("http")
-    ? `https://docs.google.com/gview?embedded=1&url=${encodeURIComponent(resourceUrl)}`
+  const officeEmbedUrl = resourceUrl.startsWith("http")
+    ? `https://view.officeapps.live.com/op/embed.aspx?src=${encodeURIComponent(resourceUrl)}`
     : "";
 
   return (
@@ -61,10 +61,10 @@ export default async function ResourcePage({
         </div>
       </Card>
       <Card title="Prévisualisation">
-        {googleEmbedUrl ? (
+        {officeEmbedUrl ? (
           <div style={{ position: "relative", width: "100%", paddingTop: "56.25%" }}>
             <iframe
-              src={googleEmbedUrl}
+              src={officeEmbedUrl}
               title={resource.title}
               style={{
                 position: "absolute",
