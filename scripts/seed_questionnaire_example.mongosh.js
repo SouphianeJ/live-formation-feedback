@@ -9,6 +9,7 @@ if (existing) {
   const domainIds = dbRef.Domain.find({ questionnaireId: existing._id }, { _id: 1 }).toArray().map(d => d._id);
   const questionIds = dbRef.Question.find({ domainId: { $in: domainIds } }, { _id: 1 }).toArray().map(q => q._id);
   if (questionIds.length) dbRef.AnswerOption.deleteMany({ questionId: { $in: questionIds } });
+  if (domainIds.length) dbRef.Resource.deleteMany({ domainId: { $in: domainIds } });
   if (domainIds.length) dbRef.Question.deleteMany({ domainId: { $in: domainIds } });
   if (domainIds.length) dbRef.Domain.deleteMany({ _id: { $in: domainIds } });
   dbRef.Questionnaire.deleteOne({ _id: existing._id });
@@ -24,7 +25,7 @@ const questionnaire = dbRef.Questionnaire.insertOne({
   updatedAt: now,
 });
 
-// Domains, Questions, Answers
+// Domains, Resources, Questions, Answers
 const domain1 = dbRef.Domain.insertOne({
   questionnaireId: questionnaire.insertedId,
   name: "Conception & structuration",
@@ -32,6 +33,13 @@ const domain1 = dbRef.Domain.insertOne({
   order: 1,
   createdAt: now,
   updatedAt: now,
+});
+dbRef.Resource.insertOne({
+  domainId: domain1.insertedId,
+  title: "Support DESIGN",
+  type: "pptx",
+  url: "http://localhost:3000/CM_DESIGN.pptx",
+  order: 1,
 });
 const q_1_1 = dbRef.Question.insertOne({
   domainId: domain1.insertedId,
@@ -197,6 +205,13 @@ const domain2 = dbRef.Domain.insertOne({
   createdAt: now,
   updatedAt: now,
 });
+dbRef.Resource.insertOne({
+  domainId: domain2.insertedId,
+  title: "Support DYNAMIQUE",
+  type: "pptx",
+  url: "http://localhost:3000/CM_DYNAMIQUE.pptx",
+  order: 1,
+});
 const q_2_1 = dbRef.Question.insertOne({
   domainId: domain2.insertedId,
   type: "single-choice",
@@ -321,6 +336,13 @@ const domain3 = dbRef.Domain.insertOne({
   order: 3,
   createdAt: now,
   updatedAt: now,
+});
+dbRef.Resource.insertOne({
+  domainId: domain3.insertedId,
+  title: "Support MICRO",
+  type: "pptx",
+  url: "http://localhost:3000/CM_MICRO.pptx",
+  order: 1,
 });
 const q_3_1 = dbRef.Question.insertOne({
   domainId: domain3.insertedId,
@@ -447,6 +469,13 @@ const domain4 = dbRef.Domain.insertOne({
   createdAt: now,
   updatedAt: now,
 });
+dbRef.Resource.insertOne({
+  domainId: domain4.insertedId,
+  title: "Support ACTIVE",
+  type: "pptx",
+  url: "http://localhost:3000/CM_ACTIVE.pptx",
+  order: 1,
+});
 const q_4_1 = dbRef.Question.insertOne({
   domainId: domain4.insertedId,
   type: "single-choice",
@@ -572,6 +601,13 @@ const domain5 = dbRef.Domain.insertOne({
   createdAt: now,
   updatedAt: now,
 });
+dbRef.Resource.insertOne({
+  domainId: domain5.insertedId,
+  title: "Support FEEDBACK",
+  type: "pptx",
+  url: "http://localhost:3000/CM_FEEDBACK.pptx",
+  order: 1,
+});
 const q_5_1 = dbRef.Question.insertOne({
   domainId: domain5.insertedId,
   type: "single-choice",
@@ -696,6 +732,13 @@ const domain6 = dbRef.Domain.insertOne({
   order: 6,
   createdAt: now,
   updatedAt: now,
+});
+dbRef.Resource.insertOne({
+  domainId: domain6.insertedId,
+  title: "Support TECH",
+  type: "pptx",
+  url: "http://localhost:3000/CM_TECH.pptx",
+  order: 1,
 });
 const q_6_1 = dbRef.Question.insertOne({
   domainId: domain6.insertedId,
