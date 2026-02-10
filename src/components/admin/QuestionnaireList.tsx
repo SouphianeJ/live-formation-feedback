@@ -57,7 +57,7 @@ export function QuestionnaireList({ items }: { items: Questionnaire[] }) {
                   Editer le questionnaire
                 </a>
                 <a href={`/q/${item.slug}`} className="btn secondary" target="_blank" rel="noreferrer">
-                  RÃ©pondre au questionnaire
+                  Répondre au questionnaire
                 </a>
                 <Button
                   variant="secondary"
