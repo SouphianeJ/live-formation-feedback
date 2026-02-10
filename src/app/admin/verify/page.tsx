@@ -2,15 +2,14 @@
 
 export const dynamic = "force-dynamic";
 
-import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
-import { useSearchParams } from "next/navigation";
+import { Suspense, useEffect, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { Card } from "@/components/ui/Card";
 import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
 import { fetchJson } from "@/lib/client";
 
-export default function AdminVerifyPage() {
+function AdminVerifyForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [email, setEmail] = useState("");
@@ -71,5 +70,13 @@ export default function AdminVerifyPage() {
         </div>
       </Card>
     </div>
+  );
+}
+
+export default function AdminVerifyPage() {
+  return (
+    <Suspense fallback={<div className="alert">Chargement...</div>}>
+      <AdminVerifyForm />
+    </Suspense>
   );
 }
