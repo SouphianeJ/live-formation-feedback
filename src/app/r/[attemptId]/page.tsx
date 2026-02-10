@@ -40,25 +40,38 @@ export default function ResultPage() {
   return (
     <div className="stack" style={{ gap: 24 }}>
       <Card title={data.item.questionnaireTitle} subtitle="Vos résultats">
-        <div className="stack">
-          <h3>Scores par domaine</h3>
-          <ul>
+        <div className="stack" style={{ gap: 16 }}>
+          <h3 style={{ margin: 0 }}>Scores par domaine</h3>
+          <div className="stack" style={{ gap: 12 }}>
             {snapshot.domainScores.map((score) => (
-              <li key={score.domainId}>
-                {score.domainName}: {score.score}/{score.maxScore} ({score.percent.toFixed(0)}%)
-              </li>
+              <div key={score.domainId} className="card" style={{ padding: "12px" }}>
+                <div className="row" style={{ justifyContent: "space-between", gap: 12 }}>
+                  <strong>{score.domainName}</strong>
+                  <span className="badge">
+                    {score.score}/{score.maxScore} ({score.percent.toFixed(0)}%)
+                  </span>
+                </div>
+                <div
+                  style={{
+                    marginTop: 8,
+                    height: 8,
+                    borderRadius: 999,
+                    background: "rgba(0,0,0,0.08)",
+                    overflow: "hidden",
+                  }}
+                >
+                  <div
+                    style={{
+                      width: `${Math.min(100, Math.max(0, score.percent))}%`,
+                      height: "100%",
+                      background: "var(--accent, #111)",
+                    }}
+                  />
+                </div>
+              </div>
             ))}
-          </ul>
+          </div>
         </div>
-      </Card>
-      <Card title="Axes que vous pourriez approfondir">
-        <ul>
-          {snapshot.lowestDomains.map((domain) => (
-            <li key={domain.domainId}>
-              {domain.domainName} ({domain.percent.toFixed(0)}%)
-            </li>
-          ))}
-        </ul>
       </Card>
       <Card title="Formations recommandées">
         <ul>
@@ -79,21 +92,42 @@ export default function ResultPage() {
           )}
         </ul>
       </Card>
-      <Card title="Ressources personnalisées">
-        <ul>
-          {snapshot.recommendedResources.length ? (
-            snapshot.recommendedResources.map((resource) => (
-              <li key={resource.resourceId}>
-                <a href={resource.url} target="_blank" rel="noreferrer">
-                  {resource.title}
-                </a>
-                ({resource.type})
-              </li>
-            ))
+      <Card title="Axes que vous pourriez approfondir et ressources personnalisées">
+        <div className="stack" style={{ gap: 12 }}>
+          {snapshot.lowestDomains.length ? (
+            snapshot.lowestDomains.map((domain) => {
+              const resources = snapshot.recommendedResources.filter((resource) => {
+                if (resource.domainId) return resource.domainId === domain.domainId;
+                if (resource.domainName) return resource.domainName === domain.domainName;
+                return resource.title.includes(domain.domainName);
+              });
+              return (
+                <div key={domain.domainId} className="card" style={{ padding: "12px" }}>
+                  <div className="row" style={{ justifyContent: "space-between", gap: 12 }}>
+                    <strong>{domain.domainName}</strong>
+                  </div>
+                  <div className="stack" style={{ marginTop: 8, gap: 6 }}>
+                    {resources.length ? (
+                      resources.map((resource) => (
+                        <div key={resource.resourceId} className="row" style={{ gap: 8 }}>
+                          <span>Ressource :</span>
+                          <a href={resource.url} target="_blank" rel="noreferrer">
+                            {resource.title}
+                          </a>
+                          <span className="label">({resource.type})</span>
+                        </div>
+                      ))
+                    ) : (
+                      <div className="label">Aucune ressource associée</div>
+                    )}
+                  </div>
+                </div>
+              );
+            })
           ) : (
-            <li>Aucune ressource</li>
+            <div className="label">Aucun axe à approfondir</div>
           )}
-        </ul>
+        </div>
       </Card>
     </div>
   );
