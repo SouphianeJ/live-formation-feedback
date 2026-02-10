@@ -68,11 +68,11 @@ export function participantResultEmail(params: {
       <h2>Résultats du diagnostic</h2>
       <p>Voici votre score par domaine :</p>
       <ul>${scoresHtml}</ul>
-      <p>Vos 2 domaines les plus faibles :</p>
+      <p>Axes sur lesquels vous pourriez progresser :</p>
       <ul>${lowestHtml}</ul>
       <p>Formations recommandées :</p>
       <ul>${trainingsHtml || "<li>Aucune recommandation</li>"}</ul>
-      <p>Ressources :</p>
+      <p>On vous propose ces ressources personnalisées :</p>
       <ul>${resourcesHtml || "<li>Aucune ressource</li>"}</ul>
       ${resultLink}
     `,

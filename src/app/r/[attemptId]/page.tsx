@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
@@ -51,7 +51,7 @@ export default function ResultPage() {
           </ul>
         </div>
       </Card>
-      <Card title="Domaines à renforcer">
+      <Card title="Axes que vous pourriez approfondir">
         <ul>
           {snapshot.lowestDomains.map((domain) => (
             <li key={domain.domainId}>
@@ -79,7 +79,7 @@ export default function ResultPage() {
           )}
         </ul>
       </Card>
-      <Card title="Ressources">
+      <Card title="Ressources personnalisées">
         <ul>
           {snapshot.recommendedResources.length ? (
             snapshot.recommendedResources.map((resource) => (
@@ -98,3 +98,4 @@ export default function ResultPage() {
     </div>
   );
 }
+
