@@ -64,7 +64,7 @@ export function QuestionnaireList({ items }: { items: Questionnaire[] }) {
                   onClick={() => handleCopy(item)}
                   aria-label={`Copier l'URL du questionnaire ${item.title}`}
                 >
-                  {copiedId === item.id ? "CopiÃ©" : "Copier l'URL"}
+                  {copiedId === item.id ? "Copié" : "Copier l'URL"}
                 </Button>
               </div>
             </td>

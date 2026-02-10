@@ -95,10 +95,10 @@ export function QuestionnaireSettings({
           {loading ? "Sauvegarde..." : "Sauvegarder"}
         </Button>
         <a href={`/q/${slug}`} className="btn secondary" target="_blank" rel="noreferrer">
-          RÃ©pondre au questionnaire
+          Répondre au questionnaire
         </a>
         <Button variant="secondary" onClick={handleCopy}>
-          {copied ? "CopiÃ©" : "Copier l'URL"}
+          {copied ? "Copié" : "Copier l'URL"}
         </Button>
       </div>
       {error ? <div className="alert">{error}</div> : null}
