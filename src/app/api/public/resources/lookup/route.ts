@@ -20,13 +20,21 @@ export async function GET(request: NextRequest) {
     });
 
     return NextResponse.json({
-      items: items.map((resource) => ({
-        id: resource.id,
-        domainId: resource.domainId,
-        domainName: resource.domain.name,
-        title: resource.title,
-        type: resource.type,
-      })),
+      items: items.map(
+        (resource: {
+          id: string;
+          domainId: string;
+          domain: { name: string };
+          title: string;
+          type: string;
+        }) => ({
+          id: resource.id,
+          domainId: resource.domainId,
+          domainName: resource.domain.name,
+          title: resource.title,
+          type: resource.type,
+        })
+      ),
     });
   } catch (error) {
     console.error(error);
