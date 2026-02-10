@@ -61,6 +61,17 @@ export async function POST(
       responses,
     });
 
+    const baseUrl = process.env.APP_BASE_URL || "";
+    const trackedSnapshot = {
+      ...snapshot,
+      recommendedResources: snapshot.recommendedResources.map((resource) => ({
+        ...resource,
+        url: baseUrl
+          ? `${baseUrl}/r/${attemptId}/resource/${resource.resourceId}`
+          : `/r/${attemptId}/resource/${resource.resourceId}`,
+      })),
+    };
+
     const updated = await prisma.attempt.update({
       where: { id: attempt.id },
       data: {
@@ -68,16 +79,15 @@ export async function POST(
         submittedAt: new Date(),
         lockedAt: new Date(),
         responses: responsesWithScore,
-        scoreSnapshot: snapshot,
+        scoreSnapshot: trackedSnapshot,
       },
     });
 
-    const baseUrl = process.env.APP_BASE_URL || "";
     const resultUrl = baseUrl ? `${baseUrl}/r/${updated.id}` : undefined;
 
     const emailContent = participantResultEmail({
       title: questionnaire.title,
-      snapshot,
+      snapshot: trackedSnapshot,
       resultUrl,
     });
     await sendMail({

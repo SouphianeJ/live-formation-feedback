@@ -93,6 +93,29 @@ export default function AdminQuestionnaireDetailPage() {
           </Button>
         </div>
       </Card>
+      <Card title="Stats ressources" subtitle="Clics sur les supports (PPTX, liens).">
+        <div className="stack">
+          {domains.map((domain) => (
+            <div key={domain.id} className="stack" style={{ gap: 6 }}>
+              <strong>{domain.name}</strong>
+              {domain.resources.length ? (
+                <div className="stack" style={{ gap: 4 }}>
+                  {domain.resources.map((resource) => (
+                    <div key={resource.id} className="row" style={{ gap: 12 }}>
+                      <span>{resource.title}</span>
+                      <span className="badge">
+                        {(resource.clickCount ?? 0).toLocaleString("fr-FR")} clics
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div className="label">Aucune ressource</div>
+              )}
+            </div>
+          ))}
+        </div>
+      </Card>
     </div>
   );
 }

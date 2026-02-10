@@ -38,8 +38,9 @@ dbRef.Resource.insertOne({
   domainId: domain1.insertedId,
   title: "Support DESIGN",
   type: "pptx",
-  url: "http://localhost:3000/CM_DESIGN.pptx",
+  url: "/CM_DESIGN.pptx",
   order: 1,
+  clickCount: 0,
 });
 const q_1_1 = dbRef.Question.insertOne({
   domainId: domain1.insertedId,
@@ -209,8 +210,9 @@ dbRef.Resource.insertOne({
   domainId: domain2.insertedId,
   title: "Support DYNAMIQUE",
   type: "pptx",
-  url: "http://localhost:3000/CM_DYNAMIQUE.pptx",
+  url: "/CM_DYNAMIQUE.pptx",
   order: 1,
+  clickCount: 0,
 });
 const q_2_1 = dbRef.Question.insertOne({
   domainId: domain2.insertedId,
@@ -341,8 +343,9 @@ dbRef.Resource.insertOne({
   domainId: domain3.insertedId,
   title: "Support MICRO",
   type: "pptx",
-  url: "http://localhost:3000/CM_MICRO.pptx",
+  url: "/CM_MICRO.pptx",
   order: 1,
+  clickCount: 0,
 });
 const q_3_1 = dbRef.Question.insertOne({
   domainId: domain3.insertedId,
@@ -473,8 +476,9 @@ dbRef.Resource.insertOne({
   domainId: domain4.insertedId,
   title: "Support ACTIVE",
   type: "pptx",
-  url: "http://localhost:3000/CM_ACTIVE.pptx",
+  url: "/CM_ACTIVE.pptx",
   order: 1,
+  clickCount: 0,
 });
 const q_4_1 = dbRef.Question.insertOne({
   domainId: domain4.insertedId,
@@ -605,8 +609,9 @@ dbRef.Resource.insertOne({
   domainId: domain5.insertedId,
   title: "Support FEEDBACK",
   type: "pptx",
-  url: "http://localhost:3000/CM_FEEDBACK.pptx",
+  url: "/CM_FEEDBACK.pptx",
   order: 1,
+  clickCount: 0,
 });
 const q_5_1 = dbRef.Question.insertOne({
   domainId: domain5.insertedId,
@@ -737,8 +742,9 @@ dbRef.Resource.insertOne({
   domainId: domain6.insertedId,
   title: "Support TECH",
   type: "pptx",
-  url: "http://localhost:3000/CM_TECH.pptx",
+  url: "/CM_TECH.pptx",
   order: 1,
+  clickCount: 0,
 });
 const q_6_1 = dbRef.Question.insertOne({
   domainId: domain6.insertedId,

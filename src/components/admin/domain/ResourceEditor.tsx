@@ -12,6 +12,7 @@ export type ResourceItem = {
   type: string;
   url: string;
   order: number;
+  clickCount?: number;
 };
 
 export function ResourceEditor({

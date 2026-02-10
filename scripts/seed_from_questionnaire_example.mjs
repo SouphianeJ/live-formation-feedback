@@ -23,9 +23,6 @@ function loadEnv(filePath) {
   return env;
 }
 
-const env = loadEnv(envPath);
-const baseUrl = (env.APP_BASE_URL || "http://localhost:3000").replace(/\/$/, "");
-
 const raw = fs.readFileSync(sourcePath);
 let text = raw.toString("utf8");
 text = text.replace(/\r\n/g, "\n");
@@ -136,8 +133,8 @@ for (const domain of domains) {
 
   const resourceFile = resourceMap[domain.description];
   if (resourceFile) {
-    const resourceUrl = `${baseUrl}/${resourceFile}`;
-    linesOut.push(`dbRef.Resource.insertOne({\n  domainId: domain${domain.order}.insertedId,\n  title: ${JSON.stringify(`Support ${domain.description}`)},\n  type: ${JSON.stringify("pptx")},\n  url: ${JSON.stringify(resourceUrl)},\n  order: 1,\n});`);
+    const resourceUrl = `/${resourceFile}`;
+    linesOut.push(`dbRef.Resource.insertOne({\n  domainId: domain${domain.order}.insertedId,\n  title: ${JSON.stringify(`Support ${domain.description}`)},\n  type: ${JSON.stringify("pptx")},\n  url: ${JSON.stringify(resourceUrl)},\n  order: 1,\n  clickCount: 0,\n});`);
   }
 
   let qIndex = 0;

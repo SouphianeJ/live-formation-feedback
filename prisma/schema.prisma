@@ -74,6 +74,7 @@ model Resource {
   type     String
   url      String
   order    Int
+  clickCount Int     @default(0)
 
   domain Domain @relation(fields: [domainId], references: [id])
 }

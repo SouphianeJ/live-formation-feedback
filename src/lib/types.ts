@@ -22,6 +22,7 @@ export type Resource = {
   type: string;
   url: string;
   order: number;
+  clickCount?: number;
 };
 
 export type Training = {
