@@ -3,7 +3,8 @@ import { Card } from "@/components/ui/Card";
 
 export const dynamic = "force-dynamic";
 
-function buildResourceUrl(url: string) {
+function buildResourceUrl(url: string, sourceType?: string) {
+  if (sourceType === "external") return url;
   if (url.startsWith("http://") || url.startsWith("https://")) {
     return url;
   }
@@ -43,10 +44,15 @@ export default async function ResourcePage({
     data: { clickCount: (resource.clickCount ?? 0) + 1 },
   });
 
-  const resourceUrl = buildResourceUrl(resource.url);
-  const officeEmbedUrl = resourceUrl.startsWith("http")
-    ? `https://view.officeapps.live.com/op/embed.aspx?src=${encodeURIComponent(resourceUrl)}`
-    : "";
+  const resourceUrl = buildResourceUrl(resource.url, resource.sourceType);
+  const lowerUrl = resourceUrl.toLowerCase();
+  const isPdf = lowerUrl.endsWith(".pdf");
+  const isOffice = lowerUrl.endsWith(".pptx") || lowerUrl.endsWith(".ppt");
+  const officeEmbedUrl =
+    resourceUrl.startsWith("http") && isOffice
+      ? `https://view.officeapps.live.com/op/embed.aspx?src=${encodeURIComponent(resourceUrl)}`
+      : "";
+  const directEmbedUrl = resourceUrl.startsWith("http") && isPdf ? resourceUrl : "";
 
   return (
     <div className="stack" style={{ gap: 24 }}>
@@ -61,7 +67,21 @@ export default async function ResourcePage({
         </div>
       </Card>
       <Card title="Prévisualisation">
-        {officeEmbedUrl ? (
+        {directEmbedUrl ? (
+          <div style={{ position: "relative", width: "100%", paddingTop: "56.25%" }}>
+            <iframe
+              src={directEmbedUrl}
+              title={resource.title}
+              style={{
+                position: "absolute",
+                inset: 0,
+                width: "100%",
+                height: "100%",
+                border: "none",
+              }}
+            />
+          </div>
+        ) : officeEmbedUrl ? (
           <div style={{ position: "relative", width: "100%", paddingTop: "56.25%" }}>
             <iframe
               src={officeEmbedUrl}

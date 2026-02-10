@@ -134,7 +134,7 @@ for (const domain of domains) {
   const resourceFile = resourceMap[domain.description];
   if (resourceFile) {
     const resourceUrl = `/${resourceFile}`;
-    linesOut.push(`dbRef.Resource.insertOne({\n  domainId: domain${domain.order}.insertedId,\n  title: ${JSON.stringify(`Support ${domain.description}`)},\n  type: ${JSON.stringify("pptx")},\n  url: ${JSON.stringify(resourceUrl)},\n  order: 1,\n  clickCount: 0,\n});`);
+    linesOut.push(`dbRef.Resource.insertOne({\n  domainId: domain${domain.order}.insertedId,\n  title: ${JSON.stringify(`Support ${domain.description}`)},\n  type: ${JSON.stringify("pptx")},\n  url: ${JSON.stringify(resourceUrl)},\n  order: 1,\n  clickCount: 0,\n  sourceType: \"repo\",\n});`);
   }
 
   let qIndex = 0;

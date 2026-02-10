@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import type { Questionnaire } from "@/lib/types";
 import { useState } from "react";
@@ -53,18 +53,18 @@ export function QuestionnaireList({ items }: { items: Questionnaire[] }) {
             <td>{item.slug}</td>
             <td>
               <div className="row mobile-stack tight">
-                <a href={`/admin/questionnaires/${item.id}`} className="badge">
-                  Ouvrir
+                <a href={`/admin/questionnaires/${item.id}`} className="btn secondary">
+                  Editer le questionnaire
                 </a>
-                <a href={`/q/${item.slug}`} className="badge" target="_blank" rel="noreferrer">
-                  Voir le questionnaire
+                <a href={`/q/${item.slug}`} className="btn secondary" target="_blank" rel="noreferrer">
+                  RÃ©pondre au questionnaire
                 </a>
                 <Button
                   variant="secondary"
                   onClick={() => handleCopy(item)}
                   aria-label={`Copier l'URL du questionnaire ${item.title}`}
                 >
-                  {copiedId === item.id ? "Copié" : "Copier l'URL"}
+                  {copiedId === item.id ? "CopiÃ©" : "Copier l'URL"}
                 </Button>
               </div>
             </td>
@@ -74,3 +74,4 @@ export function QuestionnaireList({ items }: { items: Questionnaire[] }) {
     </Table>
   );
 }
+

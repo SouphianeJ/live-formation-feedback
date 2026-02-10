@@ -23,6 +23,7 @@ export type Resource = {
   url: string;
   order: number;
   clickCount?: number;
+  sourceType?: "repo" | "external";
 };
 
 export type Training = {

@@ -30,12 +30,14 @@ export async function POST(request: Request) {
       type?: string;
       url?: string;
       order?: number;
+      sourceType?: string;
     };
     const domainId = requireString(body.domainId, "domainId");
     const title = requireString(body.title, "title");
     const type = requireString(body.type, "type");
     const url = requireString(body.url, "url");
     const order = requireNumber(body.order ?? 0, "order");
+    const sourceType = body.sourceType === "external" ? "external" : "repo";
 
     const item = await prisma.resource.create({
       data: {
@@ -44,6 +46,7 @@ export async function POST(request: Request) {
         type,
         url,
         order,
+        sourceType,
       },
     });
 

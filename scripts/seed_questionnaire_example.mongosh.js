@@ -41,6 +41,7 @@ dbRef.Resource.insertOne({
   url: "/CM_DESIGN.pptx",
   order: 1,
   clickCount: 0,
+  sourceType: "repo",
 });
 const q_1_1 = dbRef.Question.insertOne({
   domainId: domain1.insertedId,
@@ -213,6 +214,7 @@ dbRef.Resource.insertOne({
   url: "/CM_DYNAMIQUE.pptx",
   order: 1,
   clickCount: 0,
+  sourceType: "repo",
 });
 const q_2_1 = dbRef.Question.insertOne({
   domainId: domain2.insertedId,
@@ -346,6 +348,7 @@ dbRef.Resource.insertOne({
   url: "/CM_MICRO.pptx",
   order: 1,
   clickCount: 0,
+  sourceType: "repo",
 });
 const q_3_1 = dbRef.Question.insertOne({
   domainId: domain3.insertedId,
@@ -479,6 +482,7 @@ dbRef.Resource.insertOne({
   url: "/CM_ACTIVE.pptx",
   order: 1,
   clickCount: 0,
+  sourceType: "repo",
 });
 const q_4_1 = dbRef.Question.insertOne({
   domainId: domain4.insertedId,
@@ -612,6 +616,7 @@ dbRef.Resource.insertOne({
   url: "/CM_FEEDBACK.pptx",
   order: 1,
   clickCount: 0,
+  sourceType: "repo",
 });
 const q_5_1 = dbRef.Question.insertOne({
   domainId: domain5.insertedId,
@@ -745,6 +750,7 @@ dbRef.Resource.insertOne({
   url: "/CM_TECH.pptx",
   order: 1,
   clickCount: 0,
+  sourceType: "repo",
 });
 const q_6_1 = dbRef.Question.insertOne({
   domainId: domain6.insertedId,

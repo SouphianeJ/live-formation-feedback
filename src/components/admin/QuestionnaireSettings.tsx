@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 import { Input } from "@/components/ui/Input";
@@ -94,14 +94,15 @@ export function QuestionnaireSettings({
         <Button onClick={handleSave} disabled={loading}>
           {loading ? "Sauvegarde..." : "Sauvegarder"}
         </Button>
-        <a href={`/q/${slug}`} className="badge" target="_blank" rel="noreferrer">
-          Voir le questionnaire
+        <a href={`/q/${slug}`} className="btn secondary" target="_blank" rel="noreferrer">
+          RÃ©pondre au questionnaire
         </a>
         <Button variant="secondary" onClick={handleCopy}>
-          {copied ? "Copié" : "Copier l'URL"}
+          {copied ? "CopiÃ©" : "Copier l'URL"}
         </Button>
       </div>
       {error ? <div className="alert">{error}</div> : null}
     </div>
   );
 }
+
