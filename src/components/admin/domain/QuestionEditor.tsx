@@ -67,26 +67,38 @@ export function QuestionEditor({
   return (
     <div className="card" style={{ padding: "16px" }}>
       <div className="stack">
-        <Input value={prompt} onChange={(event) => setPrompt(event.target.value)} />
-        <Input
-          value={helpText}
-          onChange={(event) => setHelpText(event.target.value)}
-          placeholder="Aide optionnelle"
-        />
-        <div className="row">
+        <label className="stack" style={{ gap: 6 }}>
+          <span className="label">Question</span>
+          <Input value={prompt} onChange={(event) => setPrompt(event.target.value)} />
+        </label>
+        <label className="stack" style={{ gap: 6 }}>
+          <span className="label">Aide (optionnel)</span>
           <Input
-            type="number"
-            value={order}
-            onChange={(event) => setOrder(Number(event.target.value))}
-            placeholder="Ordre"
+            value={helpText}
+            onChange={(event) => setHelpText(event.target.value)}
+            placeholder="Aide optionnelle"
           />
-          <Select
-            value={isRequired ? "true" : "false"}
-            onChange={(event) => setIsRequired(event.target.value === "true")}
-          >
-            <option value="true">Obligatoire</option>
-            <option value="false">Optionnel</option>
-          </Select>
+        </label>
+        <div className="row">
+          <label className="stack" style={{ gap: 6 }}>
+            <span className="label">Ordre</span>
+            <Input
+              type="number"
+              value={order}
+              onChange={(event) => setOrder(Number(event.target.value))}
+              placeholder="Ordre"
+            />
+          </label>
+          <label className="stack" style={{ gap: 6 }}>
+            <span className="label">Obligation</span>
+            <Select
+              value={isRequired ? "true" : "false"}
+              onChange={(event) => setIsRequired(event.target.value === "true")}
+            >
+              <option value="true">Obligatoire</option>
+              <option value="false">Optionnel</option>
+            </Select>
+          </label>
           <Button onClick={handleSave} disabled={loading}>
             {loading ? "..." : "Sauver"}
           </Button>

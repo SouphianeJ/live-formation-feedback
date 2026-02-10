@@ -37,7 +37,6 @@ export function QuestionCard({
               />
               <div className="question-option__content">
                 <div className="question-option__label">{answer.label}</div>
-                <div className="label">Choix {answer.value}</div>
               </div>
             </label>
           ))}

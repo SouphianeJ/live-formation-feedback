@@ -20,11 +20,7 @@ export async function POST(request: Request) {
     }
 
     const loginCode = await prisma.adminLoginCode.findFirst({
-      where: {
-        email,
-        usedAt: null,
-        expiresAt: { gt: new Date() },
-      },
+      where: { email },
       orderBy: { createdAt: "desc" },
     });
 
@@ -32,9 +28,24 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Code expiré" }, { status: 400 });
     }
 
+    if (loginCode.usedAt) {
+      return NextResponse.json({ error: "Code déjà utilisé" }, { status: 400 });
+    }
+
     const match = await bcrypt.compare(code, loginCode.codeHash);
     if (!match) {
       return NextResponse.json({ error: "Code invalide" }, { status: 400 });
+    }
+
+    if (loginCode.expiresAt <= new Date()) {
+      if (process.env.NODE_ENV !== "production") {
+        console.log("Admin code expired", {
+          email,
+          expiresAt: loginCode.expiresAt,
+          serverNow: new Date(),
+        });
+      }
+      return NextResponse.json({ error: "Code expiré" }, { status: 400 });
     }
 
     await prisma.adminLoginCode.update({

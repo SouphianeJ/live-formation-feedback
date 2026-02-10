@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { Card } from "@/components/ui/Card";
 import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
@@ -9,10 +10,20 @@ import { fetchJson } from "@/lib/client";
 
 export default function AdminVerifyPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [email, setEmail] = useState("");
   const [code, setCode] = useState("");
   const [status, setStatus] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const fromQuery = searchParams.get("email") || "";
+    const fromStorage = localStorage.getItem("admin_login_email") || "";
+    const nextEmail = (fromQuery || fromStorage).trim().toLowerCase();
+    if (nextEmail) {
+      setEmail(nextEmail);
+    }
+  }, [searchParams]);
 
   const handleSubmit = async () => {
     setLoading(true);

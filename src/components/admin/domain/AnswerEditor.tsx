@@ -47,22 +47,34 @@ export function AnswerEditor({
   return (
     <div className="card" style={{ padding: "12px" }}>
       <div className="row">
-        <Input value={value} onChange={(event) => setValue(event.target.value)} placeholder="A" />
-        <Input value={label} onChange={(event) => setLabel(event.target.value)} placeholder="Label" />
+        <label className="stack" style={{ gap: 6 }}>
+          <span className="label">Valeur</span>
+          <Input value={value} onChange={(event) => setValue(event.target.value)} placeholder="A" />
+        </label>
+        <label className="stack" style={{ gap: 6 }}>
+          <span className="label">Libellé</span>
+          <Input value={label} onChange={(event) => setLabel(event.target.value)} placeholder="Label" />
+        </label>
       </div>
       <div className="row">
-        <Input
-          type="number"
-          value={score}
-          onChange={(event) => setScore(Number(event.target.value))}
-          placeholder="Score"
-        />
-        <Input
-          type="number"
-          value={order}
-          onChange={(event) => setOrder(Number(event.target.value))}
-          placeholder="Ordre"
-        />
+        <label className="stack" style={{ gap: 6 }}>
+          <span className="label">Score</span>
+          <Input
+            type="number"
+            value={score}
+            onChange={(event) => setScore(Number(event.target.value))}
+            placeholder="Score"
+          />
+        </label>
+        <label className="stack" style={{ gap: 6 }}>
+          <span className="label">Ordre</span>
+          <Input
+            type="number"
+            value={order}
+            onChange={(event) => setOrder(Number(event.target.value))}
+            placeholder="Ordre"
+          />
+        </label>
         <Button onClick={handleSave} disabled={loading}>
           {loading ? "..." : "Sauver"}
         </Button>

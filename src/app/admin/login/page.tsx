@@ -1,12 +1,14 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { Card } from "@/components/ui/Card";
 import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
 import { fetchJson } from "@/lib/client";
 
 export default function AdminLoginPage() {
+  const router = useRouter();
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
@@ -20,7 +22,12 @@ export default function AdminLoginPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email }),
       });
+      const normalized = email.trim().toLowerCase();
+      if (normalized) {
+        localStorage.setItem("admin_login_email", normalized);
+      }
       setStatus("Code envoyé. Vérifiez votre email.");
+      router.push(`/admin/verify?email=${encodeURIComponent(normalized)}`);
     } catch (error) {
       setStatus((error as Error).message);
     } finally {

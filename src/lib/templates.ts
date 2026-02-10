@@ -1,10 +1,26 @@
 import type { ScoreSnapshot } from "@/lib/types";
 
-export function adminCodeEmail(code: string) {
-  const text = `Votre code de connexion admin est: ${code}. Il expire dans 10 minutes.`;
+function formatInTimeZone(date: Date, timeZone: string) {
+  try {
+    return new Intl.DateTimeFormat("fr-FR", {
+      dateStyle: "short",
+      timeStyle: "short",
+      timeZone,
+    }).format(date);
+  } catch {
+    return date.toISOString();
+  }
+}
+
+export function adminCodeEmail(code: string, expiresAt?: Date) {
+  const timeZone = process.env.APP_TIMEZONE || "UTC";
+  const expiryText = expiresAt
+    ? `Il expire à ${formatInTimeZone(expiresAt, timeZone)} (${timeZone}).`
+    : "Il expire dans 10 minutes.";
+  const text = `Votre code de connexion admin est: ${code}. ${expiryText}`;
   return {
     subject: "Code de connexion admin",
-    html: `<p>Votre code de connexion admin est :</p><h2>${code}</h2><p>Il expire dans 10 minutes.</p>`,
+    html: `<p>Votre code de connexion admin est :</p><h2>${code}</h2><p>${expiryText}</p>`,
     text,
   };
 }

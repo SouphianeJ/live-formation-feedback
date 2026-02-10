@@ -38,6 +38,9 @@ export async function POST(request: Request) {
     const code = generateCode();
     const codeHash = await bcrypt.hash(code, 10);
     const expiresAt = new Date(Date.now() + 10 * 60 * 1000);
+    if (process.env.NODE_ENV !== "production") {
+      console.log("Admin login code (dev only):", { email, code, expiresAt });
+    }
 
     await prisma.adminLoginCode.create({
       data: {
@@ -47,7 +50,7 @@ export async function POST(request: Request) {
       },
     });
 
-    const emailContent = adminCodeEmail(code);
+    const emailContent = adminCodeEmail(code, expiresAt);
     await sendMail({
       to: email,
       subject: emailContent.subject,
