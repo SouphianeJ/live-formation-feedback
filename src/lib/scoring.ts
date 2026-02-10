@@ -75,6 +75,8 @@ export function computeScoreSnapshot(params: {
     .filter((domain) => lowestDomainIds.has(domain.id))
     .flatMap((domain) =>
       domain.resources.map((resource) => ({
+        domainId: domain.id,
+        domainName: domain.name,
         resourceId: resource.id,
         title: resource.title,
         type: resource.type,

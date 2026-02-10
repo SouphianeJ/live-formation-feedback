@@ -76,6 +76,8 @@ export type ScoreSnapshot = {
     url?: string | null;
   }[];
   recommendedResources: {
+    domainId?: string;
+    domainName?: string;
     resourceId: string;
     title: string;
     type: string;
