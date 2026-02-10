@@ -20,12 +20,40 @@ export default function ResultPage() {
   const params = useParams<{ attemptId: string }>();
   const [data, setData] = useState<ResultResponse | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [resourceMeta, setResourceMeta] = useState<
+    Record<string, { domainId: string; domainName: string }>
+  >({});
 
   useEffect(() => {
     fetchJson<ResultResponse>(`/api/public/results/${params.attemptId}`)
       .then((res) => setData(res))
       .catch((err) => setError((err as Error).message));
   }, [params.attemptId]);
+
+  useEffect(() => {
+    if (!data) return;
+    const missingIds = Array.from(
+      new Set(
+        data.item.scoreSnapshot.recommendedResources
+          .filter((resource) => !resource.domainId || !resource.domainName)
+          .map((resource) => resource.resourceId)
+      )
+    );
+
+    if (!missingIds.length) return;
+
+    fetchJson<{
+      items: { id: string; domainId: string; domainName: string }[];
+    }>(`/api/public/resources/lookup?ids=${missingIds.join(",")}`)
+      .then((res) => {
+        const next: Record<string, { domainId: string; domainName: string }> = {};
+        for (const item of res.items) {
+          next[item.id] = { domainId: item.domainId, domainName: item.domainName };
+        }
+        setResourceMeta(next);
+      })
+      .catch(() => {});
+  }, [data]);
 
   if (error) {
     return <div className="alert">{error}</div>;
@@ -36,6 +64,7 @@ export default function ResultPage() {
   }
 
   const snapshot = data.item.scoreSnapshot;
+  const attemptId = params.attemptId;
 
   return (
     <div className="stack" style={{ gap: 24 }}>
@@ -97,9 +126,12 @@ export default function ResultPage() {
           {snapshot.lowestDomains.length ? (
             snapshot.lowestDomains.map((domain) => {
               const resources = snapshot.recommendedResources.filter((resource) => {
-                if (resource.domainId) return resource.domainId === domain.domainId;
-                if (resource.domainName) return resource.domainName === domain.domainName;
-                return resource.title.includes(domain.domainName);
+                const meta = resourceMeta[resource.resourceId];
+                const domainId = resource.domainId || meta?.domainId;
+                const domainName = resource.domainName || meta?.domainName;
+                if (domainId) return domainId === domain.domainId;
+                if (domainName) return domainName === domain.domainName;
+                return false;
               });
               return (
                 <div key={domain.domainId} className="card" style={{ padding: "12px" }}>
@@ -110,8 +142,12 @@ export default function ResultPage() {
                     {resources.length ? (
                       resources.map((resource) => (
                         <div key={resource.resourceId} className="row" style={{ gap: 8 }}>
-                          <span>Ressource :</span>
-                          <a href={resource.url} target="_blank" rel="noreferrer">
+                          <span className="badge">Ressource →</span>
+                          <a
+                            href={`/r/${attemptId}/resource/${resource.resourceId}`}
+                            target="_blank"
+                            rel="noreferrer"
+                          >
                             {resource.title}
                           </a>
                           <span className="label">({resource.type})</span>
