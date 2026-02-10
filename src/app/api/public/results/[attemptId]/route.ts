@@ -9,11 +9,19 @@ export async function GET(
     const { attemptId } = await params;
     const attempt = await prisma.attempt.findUnique({
       where: { id: attemptId },
-      include: { questionnaire: true },
     });
 
     if (!attempt || !attempt.scoreSnapshot) {
       return NextResponse.json({ error: "Not found" }, { status: 404 });
+    }
+
+    const questionnaire = await prisma.questionnaire.findUnique({
+      where: { id: attempt.questionnaireId },
+      select: { title: true },
+    });
+
+    if (!questionnaire) {
+      return NextResponse.json({ error: "Questionnaire introuvable" }, { status: 404 });
     }
 
     return NextResponse.json({
@@ -21,7 +29,7 @@ export async function GET(
         id: attempt.id,
         email: attempt.email,
         submittedAt: attempt.submittedAt,
-        questionnaireTitle: attempt.questionnaire.title,
+        questionnaireTitle: questionnaire.title,
         scoreSnapshot: attempt.scoreSnapshot,
       },
     });
