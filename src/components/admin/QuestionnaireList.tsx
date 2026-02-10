@@ -52,7 +52,7 @@ export function QuestionnaireList({ items }: { items: Questionnaire[] }) {
             <td>{item.status}</td>
             <td>{item.slug}</td>
             <td>
-              <div className="row" style={{ gap: 8 }}>
+              <div className="row mobile-stack tight">
                 <a href={`/admin/questionnaires/${item.id}`} className="badge">
                   Ouvrir
                 </a>

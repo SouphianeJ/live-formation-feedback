@@ -90,7 +90,7 @@ export function QuestionnaireSettings({
           <option value="archived">archived</option>
         </Select>
       </AdminField>
-      <div className="row" style={{ gap: 8 }}>
+      <div className="row mobile-stack tight">
         <Button onClick={handleSave} disabled={loading}>
           {loading ? "Sauvegarde..." : "Sauvegarder"}
         </Button>

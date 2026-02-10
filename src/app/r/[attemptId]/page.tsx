@@ -71,30 +71,19 @@ export default function ResultPage() {
       <Card title={data.item.questionnaireTitle} subtitle="Vos résultats">
         <div className="stack" style={{ gap: 16 }}>
           <h3 style={{ margin: 0 }}>Scores par domaine</h3>
-          <div className="stack" style={{ gap: 12 }}>
+          <div className="grid two">
             {snapshot.domainScores.map((score) => (
-              <div key={score.domainId} className="card" style={{ padding: "12px" }}>
-                <div className="row" style={{ justifyContent: "space-between", gap: 12 }}>
+              <div key={score.domainId} className="metric">
+                <div className="row between">
                   <strong>{score.domainName}</strong>
-                  <span className="badge">
+                  <span className="badge primary">
                     {score.score}/{score.maxScore} ({score.percent.toFixed(0)}%)
                   </span>
                 </div>
-                <div
-                  style={{
-                    marginTop: 8,
-                    height: 8,
-                    borderRadius: 999,
-                    background: "rgba(0,0,0,0.08)",
-                    overflow: "hidden",
-                  }}
-                >
+                <div className="progress">
                   <div
-                    style={{
-                      width: `${Math.min(100, Math.max(0, score.percent))}%`,
-                      height: "100%",
-                      background: "var(--accent, #111)",
-                    }}
+                    className="progress__bar"
+                    style={{ width: `${Math.min(100, Math.max(0, score.percent))}%` }}
                   />
                 </div>
               </div>
@@ -103,7 +92,8 @@ export default function ResultPage() {
         </div>
       </Card>
       <Card title="Formations recommandées">
-        <ul>
+        <div className="section">
+          <ul>
           {snapshot.recommendedTrainings.length ? (
             snapshot.recommendedTrainings.map((training) => (
               <li key={training.trainingId}>
@@ -119,7 +109,8 @@ export default function ResultPage() {
           ) : (
             <li>Aucune recommandation</li>
           )}
-        </ul>
+          </ul>
+        </div>
       </Card>
       <Card title="Axes que vous pourriez approfondir et ressources personnalisées">
         <div className="stack" style={{ gap: 12 }}>
@@ -131,15 +122,15 @@ export default function ResultPage() {
                 return meta.domainId === domain.domainId;
               });
               return (
-                <div key={domain.domainId} className="card" style={{ padding: "12px" }}>
-                  <div className="row" style={{ justifyContent: "space-between", gap: 12 }}>
+                <div key={domain.domainId} className="metric">
+                  <div className="row between">
                     <strong>{domain.domainName}</strong>
                   </div>
                   <div className="stack" style={{ marginTop: 8, gap: 6 }}>
                     {resources.length ? (
                       resources.map((resource) => (
-                        <div key={resource.resourceId} className="row" style={{ gap: 8 }}>
-                          <span className="badge">Ressource →</span>
+                        <div key={resource.resourceId} className="row tight mobile-stack">
+                          <span className="badge primary">Ressource</span>
                           <a
                             href={`/r/${attemptId}/resource/${resource.resourceId}`}
                             target="_blank"
