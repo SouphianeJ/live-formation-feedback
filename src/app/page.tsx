@@ -1,12 +1,20 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Card } from "@/components/ui/Card";
 import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
+import { fetchJson } from "@/lib/client";
 
 export default function HomePage() {
   const [slug, setSlug] = useState("");
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  useEffect(() => {
+    fetchJson<{ ok: boolean }>("/api/admin/me")
+      .then((res) => setIsAdmin(Boolean(res.ok)))
+      .catch(() => setIsAdmin(false));
+  }, []);
 
   return (
     <div className="stack" style={{ gap: 24 }}>
@@ -29,9 +37,18 @@ export default function HomePage() {
         </div>
       </Card>
       <Card title="Espace admin">
-        <a href="/admin/login" className="badge">
-          Se connecter
-        </a>
+        <div className="row" style={{ gap: 12 }}>
+          
+          {isAdmin ? (
+            <a href="/admin/questionnaires" className="badge">
+              Accéder à l'admin
+            </a>
+           ) : (
+            <a href="/admin/login" className="badge">
+              Se connecter
+            </a>
+          )}
+        </div>
       </Card>
     </div>
   );
