@@ -72,6 +72,16 @@ export async function POST(
       })),
     };
 
+    const persistedSnapshot = {
+      ...snapshot,
+      recommendedResources: snapshot.recommendedResources.map((resource) => ({
+        resourceId: resource.resourceId,
+        title: resource.title,
+        type: resource.type,
+        url: resource.url,
+      })),
+    };
+
     const updated = await prisma.attempt.update({
       where: { id: attempt.id },
       data: {
@@ -79,7 +89,7 @@ export async function POST(
         submittedAt: new Date(),
         lockedAt: new Date(),
         responses: responsesWithScore,
-        scoreSnapshot: trackedSnapshot,
+        scoreSnapshot: persistedSnapshot,
       },
     });
 

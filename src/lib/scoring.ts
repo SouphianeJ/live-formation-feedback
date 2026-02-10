@@ -60,9 +60,10 @@ export function computeScoreSnapshot(params: {
     };
   });
 
-  const lowestDomains = [...domainScores]
-    .sort((a, b) => a.percent - b.percent)
-    .slice(0, 2)
+  const sortedDomains = [...domainScores].sort((a, b) => a.percent - b.percent);
+  const secondPercent = sortedDomains[1]?.percent ?? sortedDomains[0]?.percent ?? 0;
+  const lowestDomains = sortedDomains
+    .filter((entry) => entry.percent <= secondPercent)
     .map((entry) => ({
       domainId: entry.domainId,
       domainName: entry.domainName,
@@ -75,8 +76,6 @@ export function computeScoreSnapshot(params: {
     .filter((domain) => lowestDomainIds.has(domain.id))
     .flatMap((domain) =>
       domain.resources.map((resource) => ({
-        domainId: domain.id,
-        domainName: domain.name,
         resourceId: resource.id,
         title: resource.title,
         type: resource.type,
