@@ -19,6 +19,7 @@ export default function QuestionnairePage() {
   const [responses, setResponses] = useState<Record<string, string>>({});
   const [error, setError] = useState<string | null>(null);
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
     const load = async () => {
@@ -59,8 +60,9 @@ export default function QuestionnairePage() {
   };
 
   const handleSubmit = async () => {
-    if (!attemptId) return;
+    if (!attemptId || submitting) return;
     setError(null);
+    setSubmitting(true);
     try {
       const responseArray = Object.entries(responses).map(([questionId, answerId]) => ({
         questionId,
@@ -74,6 +76,8 @@ export default function QuestionnairePage() {
       setSubmitted(true);
     } catch (err) {
       setError((err as Error).message);
+    } finally {
+      setSubmitting(false);
     }
   };
 
@@ -114,9 +118,18 @@ export default function QuestionnairePage() {
               domain={domain}
               responses={responses}
               onAnswerChange={handleAnswerChange}
+              shuffleSeed={attemptId || undefined}
             />
           ))}
-          <SubmitStep onSubmit={handleSubmit} />
+          <SubmitStep
+            onSubmit={handleSubmit}
+            loading={submitting}
+            message={
+              submitting
+                ? "Envoi en cours, merci de patienter..."
+                : "Vous recevrez un email avec vos recommandations et vos scores."
+            }
+          />
         </div>
       ) : null}
 

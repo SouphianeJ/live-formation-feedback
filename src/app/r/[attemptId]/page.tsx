@@ -34,9 +34,9 @@ export default function ResultPage() {
     if (!data) return;
     const missingIds = Array.from(
       new Set(
-        data.item.scoreSnapshot.recommendedResources
-          .filter((resource) => !resource.domainId || !resource.domainName)
-          .map((resource) => resource.resourceId)
+        data.item.scoreSnapshot.recommendedResources.map(
+          (resource) => resource.resourceId
+        )
       )
     );
 
@@ -127,11 +127,8 @@ export default function ResultPage() {
             snapshot.lowestDomains.map((domain) => {
               const resources = snapshot.recommendedResources.filter((resource) => {
                 const meta = resourceMeta[resource.resourceId];
-                const domainId = resource.domainId || meta?.domainId;
-                const domainName = resource.domainName || meta?.domainName;
-                if (domainId) return domainId === domain.domainId;
-                if (domainName) return domainName === domain.domainName;
-                return false;
+                if (!meta) return false;
+                return meta.domainId === domain.domainId;
               });
               return (
                 <div key={domain.domainId} className="card" style={{ padding: "12px" }}>

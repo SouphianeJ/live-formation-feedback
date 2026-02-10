@@ -6,10 +6,12 @@ export function QuestionnaireDomainSection({
   domain,
   responses,
   onAnswerChange,
+  shuffleSeed,
 }: {
   domain: Domain;
   responses: Record<string, string>;
   onAnswerChange: (questionId: string, answerId: string) => void;
+  shuffleSeed?: string;
 }) {
   return (
     <section className="stack" style={{ gap: 12 }}>
@@ -23,6 +25,7 @@ export function QuestionnaireDomainSection({
           question={question}
           value={responses[question.id]}
           onChange={(answerId) => onAnswerChange(question.id, answerId)}
+          shuffleSeed={shuffleSeed}
         />
       ))}
     </section>

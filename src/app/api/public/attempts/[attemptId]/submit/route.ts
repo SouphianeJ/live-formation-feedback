@@ -63,9 +63,13 @@ export async function POST(
 
     const baseUrl = process.env.APP_BASE_URL || "";
     const trackedSnapshot = {
-      ...snapshot,
+      domainScores: snapshot.domainScores,
+      lowestDomains: snapshot.lowestDomains,
+      recommendedTrainings: snapshot.recommendedTrainings,
       recommendedResources: snapshot.recommendedResources.map((resource) => ({
-        ...resource,
+        resourceId: resource.resourceId,
+        title: resource.title,
+        type: resource.type,
         url: baseUrl
           ? `${baseUrl}/r/${attemptId}/resource/${resource.resourceId}`
           : `/r/${attemptId}/resource/${resource.resourceId}`,
@@ -73,7 +77,9 @@ export async function POST(
     };
 
     const persistedSnapshot = {
-      ...snapshot,
+      domainScores: snapshot.domainScores,
+      lowestDomains: snapshot.lowestDomains,
+      recommendedTrainings: snapshot.recommendedTrainings,
       recommendedResources: snapshot.recommendedResources.map((resource) => ({
         resourceId: resource.resourceId,
         title: resource.title,
