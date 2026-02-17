@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/Input";
 import { Select } from "@/components/ui/Select";
 import { Button } from "@/components/ui/Button";
 import { fetchJson } from "@/lib/client";
+import { AdminField } from "@/components/admin/AdminField";
 
 export type ResourceItem = {
   id: string;
@@ -50,27 +51,37 @@ export function ResourceEditor({
   return (
     <div className="card" style={{ padding: "12px" }}>
       <div className="stack">
-        <Input value={title} onChange={(event) => setTitle(event.target.value)} />
+        <AdminField label="Titre">
+          <Input value={title} onChange={(event) => setTitle(event.target.value)} />
+        </AdminField>
         <div className="row">
-          <Select
-            value={sourceType}
-            onChange={(event) => setSourceType(event.target.value as "repo" | "external")}
-          >
-            <option value="repo">Hébergée dans le repo</option>
-            <option value="external">URL publique externe</option>
-          </Select>
-          <Select value={type} onChange={(event) => setType(event.target.value)}>
-            <option value="pdf">pdf</option>
-            <option value="pptx">pptx</option>
-            <option value="link">link</option>
-          </Select>
-          <Input value={url} onChange={(event) => setUrl(event.target.value)} placeholder="URL" />
-          <Input
-            type="number"
-            value={order}
-            onChange={(event) => setOrder(Number(event.target.value))}
-            placeholder="Ordre"
-          />
+          <AdminField label="Source">
+            <Select
+              value={sourceType}
+              onChange={(event) => setSourceType(event.target.value as "repo" | "external")}
+            >
+              <option value="repo">Hébergée dans le repo</option>
+              <option value="external">URL publique externe</option>
+            </Select>
+          </AdminField>
+          <AdminField label="Type">
+            <Select value={type} onChange={(event) => setType(event.target.value)}>
+              <option value="pdf">pdf</option>
+              <option value="pptx">pptx</option>
+              <option value="link">link</option>
+            </Select>
+          </AdminField>
+          <AdminField label="URL">
+            <Input value={url} onChange={(event) => setUrl(event.target.value)} placeholder="URL" />
+          </AdminField>
+          <AdminField label="Ordre">
+            <Input
+              type="number"
+              value={order}
+              onChange={(event) => setOrder(Number(event.target.value))}
+              placeholder="Ordre"
+            />
+          </AdminField>
         </div>
         <div className="row">
           <Button onClick={handleSave}>Sauver</Button>

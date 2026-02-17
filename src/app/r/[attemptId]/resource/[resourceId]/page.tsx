@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 import { Card } from "@/components/ui/Card";
 
@@ -58,9 +59,9 @@ export default async function ResourcePage({
     <div className="stack" style={{ gap: 24 }}>
       <Card title={resource.title}>
         <div className="row" style={{ justifyContent: "space-between", gap: 12 }}>
-          <a className="badge" href={`/r/${attemptId}`}>
+          <Link className="badge" href={`/r/${attemptId}`}>
             Revenir aux résultats
-          </a>
+          </Link>
           <a className="badge" href={resourceUrl} target="_blank" rel="noreferrer">
             Ouvrir le fichier
           </a>

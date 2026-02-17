@@ -22,10 +22,8 @@ export function AnswerEditor({
   onUpdated: (answer: AnswerItem) => void;
   onDeleted: (id: string) => void;
 }) {
-  const [value, setValue] = useState(answer.value);
   const [label, setLabel] = useState(answer.label);
   const [score, setScore] = useState(answer.score);
-  const [order, setOrder] = useState(answer.order);
   const [loading, setLoading] = useState(false);
 
   const handleSave = async () => {
@@ -33,7 +31,7 @@ export function AnswerEditor({
     const data = await fetchJson<{ item: AnswerItem }>(`/api/admin/answers/${answer.id}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ value, label, score, order }),
+      body: JSON.stringify({ label, score }),
     });
     onUpdated(data.item);
     setLoading(false);
@@ -48,15 +46,9 @@ export function AnswerEditor({
     <div className="card" style={{ padding: "12px" }}>
       <div className="row">
         <label className="stack" style={{ gap: 6 }}>
-          <span className="label">Valeur</span>
-          <Input value={value} onChange={(event) => setValue(event.target.value)} placeholder="A" />
-        </label>
-        <label className="stack" style={{ gap: 6 }}>
-          <span className="label">Libellé</span>
+          <span className="label">Libell?</span>
           <Input value={label} onChange={(event) => setLabel(event.target.value)} placeholder="Label" />
         </label>
-      </div>
-      <div className="row">
         <label className="stack" style={{ gap: 6 }}>
           <span className="label">Score</span>
           <Input
@@ -64,15 +56,6 @@ export function AnswerEditor({
             value={score}
             onChange={(event) => setScore(Number(event.target.value))}
             placeholder="Score"
-          />
-        </label>
-        <label className="stack" style={{ gap: 6 }}>
-          <span className="label">Ordre</span>
-          <Input
-            type="number"
-            value={order}
-            onChange={(event) => setOrder(Number(event.target.value))}
-            placeholder="Ordre"
           />
         </label>
         <Button onClick={handleSave} disabled={loading}>

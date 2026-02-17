@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { Card } from "@/components/ui/Card";
 import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
@@ -40,13 +41,13 @@ export default function HomePage() {
         <div className="row" style={{ gap: 12 }}>
           
           {isAdmin ? (
-            <a href="/admin/questionnaires" className="badge">
+            <Link href="/admin/questionnaires" className="badge">
               Accéder à l'admin
-            </a>
+            </Link>
            ) : (
-            <a href="/admin/login" className="badge">
+            <Link href="/admin/login" className="badge">
               Se connecter
-            </a>
+            </Link>
           )}
         </div>
       </Card>

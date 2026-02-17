@@ -1,6 +1,7 @@
 ﻿"use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { useParams } from "next/navigation";
 import type { ScoreSnapshot } from "@/lib/types";
 import { fetchJson } from "@/lib/client";
@@ -131,13 +132,13 @@ export default function ResultPage() {
                       resources.map((resource) => (
                         <div key={resource.resourceId} className="row tight mobile-stack">
                           <span className="badge primary">Ressource</span>
-                          <a
+                          <Link
                             href={`/r/${attemptId}/resource/${resource.resourceId}`}
                             target="_blank"
                             rel="noreferrer"
                           >
                             {resource.title}
-                          </a>
+                          </Link>
                           <span className="label">({resource.type})</span>
                         </div>
                       ))

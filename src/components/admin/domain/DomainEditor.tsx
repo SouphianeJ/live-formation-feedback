@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/Button";
 import { fetchJson } from "@/lib/client";
 import { QuestionEditor, type QuestionItem } from "@/components/admin/domain/QuestionEditor";
 import { ResourceEditor, type ResourceItem } from "@/components/admin/domain/ResourceEditor";
+import { AdminField } from "@/components/admin/AdminField";
 import {
   DomainTrainingEditor,
   type DomainTrainingItem,
@@ -98,18 +99,22 @@ export function DomainEditor({
         </div>
       </div>
       <div className="row">
-        <Input value={name} onChange={(event) => setName(event.target.value)} />
-        <Input
-          value={description}
-          onChange={(event) => setDescription(event.target.value)}
-          placeholder="Description"
-        />
-        <Input
-          type="number"
-          value={order}
-          onChange={(event) => setOrder(Number(event.target.value))}
-          placeholder="Ordre"
-        />
+        <AdminField label="Nom">
+          <Input value={name} onChange={(event) => setName(event.target.value)} />
+        </AdminField>
+        <AdminField label="Description">
+          <Input
+            value={description}
+            onChange={(event) => setDescription(event.target.value)}
+          />
+        </AdminField>
+        <AdminField label="Ordre">
+          <Input
+            type="number"
+            value={order}
+            onChange={(event) => setOrder(Number(event.target.value))}
+          />
+        </AdminField>
       </div>
       <div className="stack">
         <h4 style={{ marginBottom: 0 }}>Questions</h4>
@@ -125,7 +130,7 @@ export function DomainEditor({
             onDeleted={(id) => setQuestions(questions.filter((item) => item.id !== id))}
           />
         ))}
-        <Button variant="secondary" onClick={handleAddQuestion}>
+        <Button variant="success" onClick={handleAddQuestion}>
           Ajouter une question
         </Button>
       </div>
@@ -143,7 +148,7 @@ export function DomainEditor({
             onDeleted={(id) => setResources(resources.filter((item) => item.id !== id))}
           />
         ))}
-        <Button variant="secondary" onClick={handleAddResource}>
+        <Button variant="success" onClick={handleAddResource}>
           Ajouter une ressource
         </Button>
       </div>

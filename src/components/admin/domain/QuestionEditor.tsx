@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { Input } from "@/components/ui/Input";
-import { Select } from "@/components/ui/Select";
 import { Button } from "@/components/ui/Button";
 import { fetchJson } from "@/lib/client";
 import { AnswerEditor, type AnswerItem } from "@/components/admin/domain/AnswerEditor";
@@ -89,15 +88,13 @@ export function QuestionEditor({
               placeholder="Ordre"
             />
           </label>
-          <label className="stack" style={{ gap: 6 }}>
-            <span className="label">Obligation</span>
-            <Select
-              value={isRequired ? "true" : "false"}
-              onChange={(event) => setIsRequired(event.target.value === "true")}
-            >
-              <option value="true">Obligatoire</option>
-              <option value="false">Optionnel</option>
-            </Select>
+          <label className="row tight" style={{ alignItems: "center" }}>
+            <Input
+              type="checkbox"
+              checked={isRequired}
+              onChange={(event) => setIsRequired(event.target.checked)}
+            />
+            <span className="label">Obligatoire</span>
           </label>
           <Button onClick={handleSave} disabled={loading}>
             {loading ? "..." : "Sauver"}
@@ -117,7 +114,7 @@ export function QuestionEditor({
               onDeleted={(id) => setAnswers(answers.filter((item) => item.id !== id))}
             />
           ))}
-          <Button variant="secondary" onClick={handleAddAnswer}>
+          <Button variant="success" onClick={handleAddAnswer}>
             Ajouter une réponse
           </Button>
         </div>

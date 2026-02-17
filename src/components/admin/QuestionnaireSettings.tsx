@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/Button";
 import { AdminField } from "@/components/admin/AdminField";
 import { fetchJson } from "@/lib/client";
 import type { Questionnaire } from "@/lib/types";
+import Link from "next/link";
 
 function buildQuestionnaireUrl(slug: string) {
   const base =
@@ -94,9 +95,9 @@ export function QuestionnaireSettings({
         <Button onClick={handleSave} disabled={loading}>
           {loading ? "Sauvegarde..." : "Sauvegarder"}
         </Button>
-        <a href={`/q/${slug}`} className="btn secondary" target="_blank" rel="noreferrer">
+        <Link href={`/q/${slug}`} className="btn secondary" target="_blank" rel="noreferrer">
           Répondre au questionnaire
-        </a>
+        </Link>
         <Button variant="secondary" onClick={handleCopy}>
           {copied ? "Copié" : "Copier l'URL"}
         </Button>

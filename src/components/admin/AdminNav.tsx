@@ -1,20 +1,27 @@
+import Link from "next/link";
+
 export function AdminNav() {
   return (
-    <nav className="row" style={{ justifyContent: "space-between", marginBottom: 24 }}>
-      <div className="row">
-        <a href="/" className="badge">
+    <nav className="nav">
+      <div className="nav__brand">
+        <Link href="/" className="nav__logo">
           Live Formation Feedback
-        </a>
-        <a href="/admin/questionnaires" className="badge">
-          Questionnaires
-        </a>
-        <a href="/admin/trainings" className="badge">
-          Formations
-        </a>
+        </Link>
+        <span className="nav__pill">Admin</span>
       </div>
-      <a href="/admin/login" className="badge">
-        Déconnexion
-      </a>
+      <div className="nav__links">
+        <Link href="/admin/questionnaires" className="nav__link">
+          Questionnaires
+        </Link>
+        <Link href="/admin/trainings" className="nav__link">
+          Formations
+        </Link>
+      </div>
+      <div className="nav__actions">
+        <Link href="/admin/login" className="btn ghost">
+          Déconnexion
+        </Link>
+      </div>
     </nav>
   );
 }

@@ -119,7 +119,7 @@ export default function AdminQuestionnaireDetailPage() {
               onDeleted={(id) => setDomains(domains.filter((item) => item.id !== id))}
             />
           ))}
-          <Button variant="secondary" onClick={handleAddDomain}>
+          <Button variant="success" onClick={handleAddDomain}>
             Ajouter un domaine
           </Button>
         </div>

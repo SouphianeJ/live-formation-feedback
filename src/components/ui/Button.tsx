@@ -4,6 +4,8 @@ const styles: Record<string, string> = {
   primary: "btn",
   secondary: "btn secondary",
   danger: "btn danger",
+  success: "btn success",
+  ghost: "btn ghost",
 };
 
 export function Button({

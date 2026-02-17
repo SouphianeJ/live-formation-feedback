@@ -2,6 +2,7 @@
 
 import type { Questionnaire } from "@/lib/types";
 import { useState } from "react";
+import Link from "next/link";
 import { Table } from "@/components/ui/Table";
 import { Button } from "@/components/ui/Button";
 
@@ -53,12 +54,17 @@ export function QuestionnaireList({ items }: { items: Questionnaire[] }) {
             <td>{item.slug}</td>
             <td>
               <div className="row mobile-stack tight">
-                <a href={`/admin/questionnaires/${item.id}`} className="btn secondary">
+                <Link href={`/admin/questionnaires/${item.id}`} className="btn secondary">
                   Editer le questionnaire
-                </a>
-                <a href={`/q/${item.slug}`} className="btn secondary" target="_blank" rel="noreferrer">
+                </Link>
+                <Link
+                  href={`/q/${item.slug}`}
+                  className="btn secondary"
+                  target="_blank"
+                  rel="noreferrer"
+                >
                   Répondre au questionnaire
-                </a>
+                </Link>
                 <Button
                   variant="secondary"
                   onClick={() => handleCopy(item)}

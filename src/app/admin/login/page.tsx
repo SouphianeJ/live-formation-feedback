@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Card } from "@/components/ui/Card";
 import { Input } from "@/components/ui/Input";
@@ -51,9 +52,9 @@ export default function AdminLoginPage() {
             {loading ? "Envoi..." : "Recevoir un code"}
           </Button>
           {status ? <div className="alert">{status}</div> : null}
-          <a href="/admin/verify" className="badge">
+          <Link href="/admin/verify" className="badge">
             J'ai un code
-          </a>
+          </Link>
         </div>
       </Card>
     </div>
