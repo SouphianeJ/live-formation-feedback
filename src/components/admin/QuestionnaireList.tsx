@@ -5,6 +5,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { Table } from "@/components/ui/Table";
 import { Button } from "@/components/ui/Button";
+import { fetchJson } from "@/lib/client";
 
 function buildQuestionnaireUrl(slug: string) {
   const base =
@@ -34,6 +35,14 @@ export function QuestionnaireList({ items }: { items: Questionnaire[] }) {
     }
     setCopiedId(item.id);
     setTimeout(() => setCopiedId(null), 1200);
+  };
+
+  const handleDuplicate = async (item: Questionnaire) => {
+    const data = await fetchJson<{ item: Questionnaire }>(
+      `/api/admin/questionnaires/${item.id}/copy`,
+      { method: "POST" }
+    );
+    return data.item;
   };
 
   return (
@@ -71,6 +80,17 @@ export function QuestionnaireList({ items }: { items: Questionnaire[] }) {
                   aria-label={`Copier l'URL du questionnaire ${item.title}`}
                 >
                   {copiedId === item.id ? "Copié" : "Copier l'URL"}
+                </Button>
+                <Button
+                  variant="success"
+                  onClick={async () => {
+                    const created = await handleDuplicate(item);
+                    if (created) {
+                      window.location.href = `/admin/questionnaires/${created.id}`;
+                    }
+                  }}
+                >
+                  Copier
                 </Button>
               </div>
             </td>
