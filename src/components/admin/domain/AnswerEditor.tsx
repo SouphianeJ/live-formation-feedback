@@ -46,7 +46,7 @@ export function AnswerEditor({
     <div className="card" style={{ padding: "12px" }}>
       <div className="row">
         <label className="stack" style={{ gap: 6 }}>
-          <span className="label">Libell?</span>
+          <span className="label">Libellé</span>
           <Input value={label} onChange={(event) => setLabel(event.target.value)} placeholder="Label" />
         </label>
         <label className="stack" style={{ gap: 6 }}>
